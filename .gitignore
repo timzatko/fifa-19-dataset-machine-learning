@@ -1,0 +1,17 @@
+# LaTex
+*.log
+*.aux
+*.out
+*.gz
+
+# OSX
+.DS_Store
+
+# Generated Files
+pairwise_correlations.png
+
+# Jupyter notebook
+.ipynb_checkpoints
+
+# Python
+__pycache__
