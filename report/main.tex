@@ -43,7 +43,7 @@ Ilkovičova 2, 842 16 Bratislava 4\\
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-Táto práca obsahuje analýza dát hráčov z hry FIFA 19, opis dát a ich charakteristiky. V tejto práci skúmame vzťahy atribútov na predikovaný atribút trhovej ceny hráča a jeho hernú pozíciu na ihrisku.
+Táto práca obsahuje analýzu dát hráčov z hry FIFA 19, opis dát a ich charakteristiky. V tejto práci skúmame vzťahy atribútov na predikovaný atribút trhovej ceny hráča a jeho hernú pozíciu na ihrisku.
 
 \keywords{Analýza dát, FIFA 19, Strojové Učenie, Regresia, Klasifikácia}
 \end{abstract}
@@ -55,7 +55,7 @@ Táto práca obsahuje analýza dát hráčov z hry FIFA 19, opis dát a ich char
 
 \section{Opis problému a motivácia}
 
-Rozhodli sme sa pre analýzu dát hráčov z hry FIFA 19. V hre sa nachádza veľké množstvo hráčov z rôznych krajín hrajúcich v rôznych súťažiach. Ich schopnosti v hre by mali odzrkadlovať ich schopnosti z reálneho sveta. Tvorcovia hry sa o to snažia vytvorením herných atribútov, akými sú napríklad rýchlosť šprintu, sila strely, zakončovanie alebo hlavičkovanie. Keďže dokázali vyjadriť tieto schopnosti hráčov číselne (na určitej škále), zaujíma nás ako, a či herná pozícia hráča závisí od týchto atribútov. Ďaľšou zaujímavou otázkou je ako tieto atribúty (a ktoré najviac) vplývajú na trhovú cenu hráča v hre.
+Rozhodli sme sa pre analýzu dát hráčov z hry FIFA 19. V hre sa nachádza veľké množstvo hráčov z rôznych krajín, hrajúcich v rôznych súťažiach. Ich schopnosti v hre by mali odzrkadlovať ich schopnosti z reálneho sveta. Tvorcovia hry sa o to snažia vytvorením herných atribútov, akými sú napríklad rýchlosť šprintu, sila strely, zakončovanie alebo hlavičkovanie. Keďže dokázali vyjadriť tieto schopnosti hráčov číselne (na určitej škále), zaujíma nás či, a ako herná pozícia hráča závisí od týchto atribútov. Ďaľšou zaujímavou otázkou je ako tieto atribúty (a ktoré najviac) vplývajú na trhovú cenu hráča v hre.
 
 \section{Opis dát s charakteristika dát}
  
@@ -95,15 +95,18 @@ Toto veľké množstvo atribútov sme zaradili do nasledovných kategórií, uv�
 \item \textbf{iné atribúty hry} - logo klubu, vlajka (na základe národnosti), typ postavy (tj. typ herného modelu), typ tváre (tj. kvôli herného modelu)
 \end{itemize}
 
-\subsection{Analýza}
+\subsection{Analýza chýbajúcich hodnôt}
 
 % TIMO
 % - pozreli sme chybajuce hodnoty a vztahy meczi chybajucimi hodnotami
 % - ukazat co sme zistili, dat tam ten insight z deepnotu co je, spomenut dendogram
 
-Ako prvé sme sa pozreli na chýbajúce hodnoty v našej dátovej sade. Početnosti sme vizualizovali stĺpcovým diagramom a vzťahy tepelnou mapou a dendrogramom. Zistili sme, že niektorým hráčom chýbajú hodnoty v atribútoch ako sú klub, plat, dĺžka kontraktu, číslo dresu či výkupná klauzula. Tieto hodnoty chýbajú väčšinou spoločne, o čom sme sa presvedčili v dendrograme a tepelnej mape. A je to aj logické keďže hráč, ktorý nemá klub, nemôže poberať plat, alebo mať výkupnú klauzulu v kontrakte. Z našich zistení môžeme konštatovať, že ak hráčovi chýbajú hodnoty v atribúte väčšinou nejedná sa o chybu v úplnosti dátovej sady.
+Ako prvé sme sa pozreli na chýbajúce hodnoty v našej dátovej sade. Početnosti sme vizualizovali stĺpcovým diagramom a vzťahy tepelnou mapou a dendrogramom. Zistili sme, že niektorým hráčom chýbajú hodnoty v atribútoch ako sú klub, plat, dĺžka kontraktu, číslo dresu či výkupná klauzula. Tieto hodnoty chýbajú väčšinou spoločne, o čom sme sa presvedčili v dendrograme a tepelnej mape. Je to aj logické, keďže hráč, ktorý nemá klub nemôže poberať plat alebo mať výkupnú klauzulu v kontrakte. Z našich zistení môžeme konštatovať, že ak hráčovi chýbajú hodnoty v atribúte, väčšinou sa nejedná o chybu v úplnosti dátovej sady.
 
-Analýzu sme realizovali z pohľadu dvoch atribútov, ktoré sa budeme snažiť predikovať - pozíciu hráča (kategorický atribút) a jeho trhovú hodnotu (numerický atribút). Dátová sada celkovo obsahuje 36 herných pozícií. Na základe našich futbalových znalostí sme sa rozhodli zoskupiť podobné pozície do skupín, čím sme znížili počet rôznych hodnôt v atribúte `Position` (Obr. \ref{fig:position_grouping}). Môžeme pozorovať, že triedy nie sú vyvážené.
+Analýzu sme ďalej realizovali z pohľadu dvoch atribútov, ktoré sa budeme snažiť predikovať - pozíciu hráča (kategorický atribút) a jeho trhovú hodnotu (numerický atribút). Dátová sada celkovo obsahuje 36 herných pozícií. 
+
+\subsection{Analýza z pohľadu pozície hráča} 
+Na základe našich futbalových znalostí sme sa rozhodli zoskupiť podobné pozície do skupín, čím sme znížili počet rôznych hodnôt v atribúte `Position` (Fig. \ref{fig:position_grouping}). Môžeme pozorovať, že triedy nie sú vyvážené.
 
 \begin{figure}%
     \centering
@@ -118,7 +121,7 @@ Analýzu sme realizovali z pohľadu dvoch atribútov, ktoré sa budeme snažiť 
     \label{fig:position_grouping}%
 \end{figure}
 
-Pozíciu sa môžeme pokúsiť predikovať na základe 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Vizualizovali sme všetky dvojice týchto atribútov a pomocou "scatter plot" -ov  sme hľadali zhluky jednotlivých pozícií. Ako príklad uvádzame vzťah medzi atribútmi `Shot Power` (sila strely) a `Finishing` (zakončovanie), kde môžeme pozorovať jednotlivé zhluky podľa pozície hráča (Obr. \ref{fig:shot_power_finishing_scatter_plot}).
+Pozíciu sa môžeme pokúsiť predikovať na základe 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Vizualizovali sme všetky dvojice týchto atribútov a pomocou "scatter plot" -ov  sme hľadali zhluky jednotlivých pozícií. Ako príklad uvádzame vzťah medzi atribútmi `Shot Power` (sila strely) a `Finishing` (zakončovanie), kde môžeme pozorovať jednotlivé zhluky podľa pozície hráča (Fig. \ref{fig:shot_power_finishing_scatter_plot}).
 
 \begin{figure}%
     \centering
@@ -135,7 +138,7 @@ Pozíciu sa môžeme pokúsiť predikovať na základe 34 atribútov definujúci
 
 Z prieskumnej analýzy tiež vyplýva, že pre konkrétne pozície hráčov sú typické určité čísla dresov. Pre brankárov (angl. goalkeeper) je typickým číslom dresu číslo \textit{1} pričom toto číslo nemá priredený žiaden hráč na inej pozícii. Pre útočníkov (angl. attack) to je \textit{9}, pre obrancov (angl. defense) sú to čísla \textit{2 - 6} a pre stredopoloarov \textit{7}, \textit{8} a \textit{10}. Tento atribút môže byť veľmi dobrý na klasifikáciu pozície hráča, avšak my sa v prvom rade zamieriame na predikciu z herných atribútov. Atribúty, ako napríklad čislo dresu nám môžu úlohu príliš zjednodušiť.
 
-Ďaľšou zaujímavosťou je, že v našej dátovej sade sa nachádzajú prevažne hráči ktorí preferujú pravnú nohu, avšak na pozícii ľavého obrancu výrazne prevládajú ľaví obrancovia (Obr. \ref{fig:preferred_foot_counts}).
+Ďaľšou zaujímavosťou je, že v našej dátovej sade sa nachádzajú prevažne hráči ktorí preferujú pravú nohu, avšak na pozícii ľavého obrancu výrazne prevládajú hráči s preferovanou ľavou nohou. (Fig. \ref{fig:preferred_foot_counts}).
 
 \begin{figure}[htp]
     \centering
@@ -151,7 +154,8 @@ Z prieskumnej analýzy tiež vyplýva, že pre konkrétne pozície hráčov sú 
 %     \label{fig:value_position_boxenplot}
 % \end{figure}
 
-Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atribútom `Value` a ostatnými numerickými atribútmi. Takmer lineárnu koreláciu (0.99) vykazuje atribút `Release Cause` (Obr. \ref{fig:wage_scatter_plot}). Hráči s vysokou trhovou hodnotou majú v datasete podpísanú zmluvu s vyššou výkupnou klauzulou. Vysokú koreláciu taktiež vykazujú atribúty `Overall` (0.631), `Wage` (0.850) a `International Reputation` (0.656).
+\subsection{Analýza z pohľadu trhovej hodnoty hráča}
+Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atribútom `Value` a ostatnými numerickými atribútmi. Takmer lineárnu koreláciu (0.99) vykazuje atribút `Release Cause` (Fig. \ref{fig:wage_scatter_plot}). Hráči s vysokou trhovou hodnotou majú v datasete podpísanú zmluvu s vyššou výkupnou klauzulou. Vysokú koreláciu taktiež vykazujú atribúty `Overall` (0.631), `Wage` (0.850) a `International Reputation` (0.656).
 
 \begin{figure}%
     \centering
@@ -169,13 +173,13 @@ Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atri
 
 \section{Definovanie úlohy objavovania znalostí}
 
-Rozhodli sme sa, že budeme vykonávať nasledovné úlohy:
+Rozhodli sme sa, že budeme vykonávať nasledujúce úlohy:
 \begin{itemize}
     \item predikcia hernej pozície hráča -- všeobecnej (4 triedy), rozšírenej (13 tried)
     \item predikcia hodnoty hráča (atribút s názvom `Value`)
 \end{itemize}
 
-Obe tieto úlohy budeme realizovať z atribútov určujúcich herné shopnosti hráča a následne zo všetkých atribútov. Výsledky porovnáme, očakávame, že model natrénovaný zo všetkých atribútov bude výrazne lepší, keďže niektoré atribúty výrazne ovplyvňujú predikovanú premennú a to -- Release Clause - Value; Jersey Number - Position. 
+Obe tieto úlohy budeme realizovať z atribútov určujúcich herné shopnosti hráča a následne zo všetkých atribútov. Výsledky porovnáme a očakávame, že model natrénovaný zo všetkých atribútov bude výrazne lepší, keďže niektoré atribúty výrazne ovplyvňujú predikovanú premennú a to -- Release Clause - Value; Jersey Number - Position. 
 
 \section{Predpokladaný scenár riešenia (problémy)}
 
