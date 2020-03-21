@@ -3,6 +3,7 @@
 *.aux
 *.out
 *.gz
+*.fdb_latexmk
 
 # OSX
 .DS_Store
