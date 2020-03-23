@@ -93,6 +93,4 @@ class FilterPlayersWithNanValues(BaseEstimator, TransformerMixin):
     def transform(self, x):
         assert isinstance(x, pd.DataFrame)
 
-        columns_to_drop = get_nan_columns(x[self.columns])
-
-        return x.drop(columns=columns_to_drop)
+        return x[x[self.columns].notna()]
