@@ -1,20 +1,13 @@
 from sklearn.metrics import classification_report, plot_confusion_matrix
 
 
-def custom_classification_report(clf, x_test, y_test):
-    """
-    Create custom classification report.
-
-    :param clf: classifier model.
-    :param x_test: test samples to predict labels for.
-    :param y_test: true label values of test samples.
-    """
+def custom_classification_report(clf, labels, x_test, y_test):
     y_pred = clf.predict(x_test)
 
     clf_report = classification_report(
         y_pred,
         y_test,
-        target_names=['not fraud', 'is fraud'],
+        target_names=labels,
         output_dict=True
     )
 
@@ -30,4 +23,5 @@ def custom_classification_report(clf, x_test, y_test):
 
         print('\n')
 
-    plot_confusion_matrix(clf, x_test, y_test)
+    plot_confusion_matrix(clf, x_test, y_test, display_labels=labels)
+    
