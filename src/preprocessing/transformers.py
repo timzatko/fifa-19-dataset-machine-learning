@@ -3,6 +3,8 @@ import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
+from ..helpers import get_nan_columns
+
 
 def transform_wage(val):
     if val is np.nan:
@@ -79,3 +81,18 @@ class FeatureSelector(BaseEstimator, TransformerMixin):
         assert isinstance(x, pd.DataFrame)
 
         return x[self.columns]
+
+
+class FilterPlayersWithNanValues(BaseEstimator, TransformerMixin):
+    def __init__(self, columns, **kwargs):
+        self.columns = columns
+
+    def fit(self, x, y=None):
+        return self
+
+    def transform(self, x):
+        assert isinstance(x, pd.DataFrame)
+
+        columns_to_drop = get_nan_columns(x[self.columns])
+
+        return x.drop(columns=columns_to_drop)
