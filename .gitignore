@@ -19,3 +19,7 @@ __pycache__
 
 # Idea
 .idea
+
+# Data
+data/fifa_processed_for_cls.csv
+data/fifa_processed_for_reg.csv
