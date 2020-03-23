@@ -68,7 +68,7 @@ class WeightTransformer(BaseEstimator, TransformerMixin):
         return X
 
 
-class SelectFeatures(BaseEstimator, TransformerMixin):
+class FeatureSelector(BaseEstimator, TransformerMixin):
     def __init__(self, columns):
         self.columns = columns
 
