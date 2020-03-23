@@ -1,5 +1,42 @@
 SPECIFIC_POSITIONS = ['LS', 'ST', 'RS', 'LW', 'LF', 'CF', 'RW', 'LAM', 'RAM', 'LM', 'LCM', 'CM', 'RCM', 'RM', 'LWB', 'LDM', 'RDM', 'LB', 'LCB', 'RCB', 'RB']
 
+SKILL_ATTRIBUTES = [
+    'Crossing',
+    'Finishing',
+    'HeadingAccuracy',
+    'ShortPassing',
+    'Volleys',
+    'Dribbling',
+    'Curve',
+    'FKAccuracy',
+    'LongPassing',
+    'BallControl',
+    'Acceleration',
+    'SprintSpeed',
+    'Agility',
+    'Reactions',
+    'Balance',
+    'ShotPower',
+    'Jumping',
+    'Stamina',
+    'Strength',
+    'LongShots',
+    'Aggression',
+    'Interceptions',
+    'Positioning',
+    'Vision',
+    'Penalties',
+    'Composure',
+    'Marking',
+    'StandingTackle',
+    'SlidingTackle',
+    'GKDiving',
+    'GKHandling',
+    'GKKicking',
+    'GKPositioning',
+    'GKReflexes'
+]
+
 NUMERIC_ATTRIBUTES = [
     'Age',
     'Weak Foot',
