@@ -81,7 +81,7 @@ Rozhodli sme sa pre analýzu dát hráčov z hry FIFA 19. V hre sa nachádza ve�
  
 Naša dátová sada obsahuje 18207 záznamov - hráčov, ktorý každý z nich má 87 atribútov. Z toho je 42 numerických a 45 kategorických.
  
-\subsection{Očistenie dát}
+\subsection{Očistenie dát} \label{ocistenie_dat}
  
 Kvôli analýze bolo treba dátovú sadu, očistiť a urobiť predspracovanie niektorých atribútov. Bolo nutné spraviť nasledovné úpravy -- konverzia a očistenie finančných hodnôt (napr. `\$77.5M`, `\$1K`), konverzia mier (napr. `159lbs`, `5'11`), konverzia časových údajov (napr. `Jan 25, 2019`, `2018`) a rozdelenie niektorých atribútov na viac atribútov - niektoré atribúty obsahovali dva numerické atribúty. Taktiež atribút určujúci pozíciu hráča obsahoval až 38 rôznych herných pozícii, preto sme sa rozhodli tento atribút rozšíriť do ďalších dvoch atribútov v ktorých sme podobné pozície spojili čím vznikli dva atribúty s 13 resp. 4 hodnotami. Po týchto úpravách sa nám počet atribútov zmenil na 129 -- 89 numerických a 40 kategorických atribútov.
 
@@ -95,7 +95,7 @@ Toto veľké množstvo atribútov sme zaradili do nasledovných kategórií, uv�
 \item \textbf{iné atribúty hry} - logo klubu, vlajka (na základe národnosti), typ postavy (tj. typ herného modelu), typ tváre (tj. kvôli herného modelu)
 \end{itemize}
 
-\subsection{Analýza chýbajúcich hodnôt}
+\subsection{Analýza chýbajúcich hodnôt} \label{analyza_chybajucich_hodnot}
 
 % TIMO
 % - pozreli sme chybajuce hodnoty a vztahy meczi chybajucimi hodnotami
@@ -103,7 +103,7 @@ Toto veľké množstvo atribútov sme zaradili do nasledovných kategórií, uv�
 
 Ako prvé sme sa pozreli na chýbajúce hodnoty v našej dátovej sade. Početnosti sme vizualizovali stĺpcovým diagramom a vzťahy tepelnou mapou a dendrogramom. Zistili sme, že niektorým hráčom chýbajú hodnoty v atribútoch ako sú klub, plat, dĺžka kontraktu, číslo dresu či výkupná klauzula. Tieto hodnoty chýbajú väčšinou spoločne, o čom sme sa presvedčili v dendrograme a tepelnej mape. Je to aj logické, keďže hráč, ktorý nemá klub nemôže poberať plat alebo mať výkupnú klauzulu v kontrakte. Z našich zistení môžeme konštatovať, že ak hráčovi chýbajú hodnoty v atribúte, väčšinou sa nejedná o chybu v úplnosti dátovej sady.
 
-\subsection{Analýza z pohľadu pozície hráča} 
+\subsection{Analýza z pohľadu pozície hráča} \label{analyza_z_pohladu_pozicie}
 
 Analýzu sme ďalej realizovali z pohľadu dvoch atribútov, ktoré sa budeme snažiť predikovať - pozíciu hráča (kategorický atribút) a jeho trhovú hodnotu (numerický atribút). Dátová sada celkovo obsahuje 36 herných pozícií. 
 
@@ -194,7 +194,30 @@ Predpokladáme, že bude potrebné vykonať nasledovné úlohy:
 
 Trénovanie modelu zahŕňa výber atribútov (angl. feature selection) a výber a trénovanie modelu. Na úlohu predikcie hodnoty hráča budeme pravdepodobne používať lineárnu regresiu/neurónovú sieť a na určenie hernej pozície hráča rozhodovací strom / náhodný les / SVM / neurónovú sieť.
 
+\section{Predspracovanie dát}
+Prvotnému predspracovaniu dát na účely analýzy sme sa venovali v kapitole \ref{ocistenie_dat}
+Jedná sa o nasledujúce transformácie dát:
+\begin{itemize}
+    \item Transformácia hodnôt peňažných atribútov (napr. hodnoty 1.2M, 200K sme transformovali na jednotný numerický tvar)
+    \item Dátumové atribúty sme transformovali na jednotný tvar, reprezentovaný UNIX časovou pečiatkou
+    \item Atribúty miery (napr. výška a hmotnosť hráča) sme transformovali tak, aby boli v spoločných jednotkách
+    \item Špeciálne pozície hráča boli udávané v tvare reťazca \textit{Value+Grow}. Atribúty špeciálnych pozícií sme rozdelili na dvojice aby nám vznikli numerické atribúty.
+    \item Atribút \textit{Work Rate} bol udávaný reťazcom v tvare \textit{Attack/Defense}. Tento atribút sme tiež rozdelili na 2 numerické.
+    \item Boolean atribúty udávané reťazcami sme transformovali na numerické 0/1
+    \item Vytvorili sme 2 nové atribúty Position(4) a Position(13), ktoré reprezentujú pozíciu hráča po zoskúpení pozícií, opísanom v kapitole \ref{analyza_z_pohladu_pozicie}
+    \item Vytvorili sme atribút \textit{Contract length}, ktorý reprezentuje dĺžku aktuálne podpísanej zmluvy hráča 
+\end{itemize}
+
+Pre účely klasifikačnej a regresnej úlohy sme sa rozhodli kategorické atribúty kódovať pomocou "One-Hot encoding" -u. Numerické atribúty sa nachádzali v rôznych rozsahoch a jednotkách (napríklad hmotnosť v lb, výška v cm, rôzne schopnosti hráča v rozsahu [0,100]). Rozhodli sme sa ich normalizovať na jednotný interval [0,1].
+
+\subsection {Chýbajúce hodnoty}
+V kapitole \ref{analyza_chybajucich_hodnot} sme opísali dôvod výskytu chýbajúcich hodnôt. Chýbajúce hodnoty opísané v kapitole \ref{analyza_chybajucich_hodnot} považujeme za opodstatnené a nebudeme ich nahrádzať.
+
+\subsection {Vychýlené hodnoty}
+Rozdelenie číselných hodnôt v datasete sme podrobne analyzovali a vyzualizovali. Na základe podrobnej analýzy sme dospeli k záveru, že dataset neobsahuje žiadne vychýlené hodnoty.
 % \bibliographystyle{splncs04}
 % \bibliography{references}
+
+\section{Related work TODO}
 
 \end{document}
