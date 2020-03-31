@@ -29,7 +29,7 @@ def custom_classification_report(clf, labels, x_test, y_test, **kwargs):
 
         print('\n')
 
-    if kwargs.gey('plot_confusion_matrix', True):
+    if kwargs.get('plot_confusion_matrix', True):
         fig, ax = plt.subplots(figsize=kwargs.get('figsize', (20, 10)))
             
         plot_confusion_matrix(clf, x_test, y_test, display_labels=labels, ax=ax)
