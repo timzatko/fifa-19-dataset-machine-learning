@@ -58,4 +58,4 @@ class DatasetForRegression:
         X = self.X
         y = self.y[value]
 
-        return train_test_split(X, y, test_size=kwargs.get('test_size', 20), random_state=42)
+        return train_test_split(X, y, test_size=kwargs.get('test_size', 0.2), random_state=42)
