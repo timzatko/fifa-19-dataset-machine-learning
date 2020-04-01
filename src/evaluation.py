@@ -1,6 +1,6 @@
 from sklearn.metrics import classification_report, plot_confusion_matrix, mean_squared_error, mean_squared_log_error, explained_variance_score
 
-
+import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -30,9 +30,10 @@ def custom_classification_report(clf, labels, x_test, y_test, **kwargs):
         print('\n')
 
     if kwargs.get('plot_confusion_matrix', True):
-        fig, ax = plt.subplots(figsize=kwargs.get('figsize', (20, 10)))
+        matplotlib.rcParams.update({'font.size': 29})
+        fig, ax = plt.subplots(figsize=kwargs.get('figsize', (40, 30)))
             
-        plot_confusion_matrix(clf, x_test, y_test, display_labels=labels, ax=ax)
+        plot_confusion_matrix(clf, x_test, y_test, display_labels=labels, ax=ax, xticks_rotation='vertical')
         
         
 def custom_classification_report_nn(clf, labels, x_test, y_test, **kwargs):

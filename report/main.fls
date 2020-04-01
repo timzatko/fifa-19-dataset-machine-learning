@@ -32,6 +32,8 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption3.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/caption/caption3.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.aux
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.aux
 OUTPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.aux
@@ -99,6 +101,12 @@ INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/rele
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/wage_value_scatter_plot.png
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/wage_value_scatter_plot.png
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/wage_value_scatter_plot.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position4_logicticCV.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position4_logicticCV.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position4_logicticCV.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position13_logisticCV.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position13_logisticCV.png
+INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/images/confusion_matrix_position13_logisticCV.png
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.bbl
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.bbl
 INPUT /Users/tomashoffer/Documents/Coding-Projects/fiit-oznal/report/main.aux

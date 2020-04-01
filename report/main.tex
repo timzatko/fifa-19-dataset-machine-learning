@@ -13,6 +13,7 @@
 % \renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \usepackage{subfig}
+\usepackage{multirow}
 
 \begin{document}
 %
@@ -219,18 +220,54 @@ Rozdelenie číselných hodnôt v datasete sme podrobne analyzovali a vyzualizov
 \subsection {Problém nevyváženosti tried}
 Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť jednotlivých tried (Fig.\ref{fig:position_grouping}), čo by mohlo negatívne ovplyvniť presnosť predikcie. Tento problém sme sa rozhodli riešiť algoritmom SMOTE, ktorý využíva tzv. "oversampling" a vytvára syntetické inštancie minoritnej triedy pomocou lineárnej kombinácie reálnych inštancií.\cite{AlbertoFernandez2018}
 
-
-\section {Výber atribútov} \label{vyber_atributov}
+\section{Výber atribútov}
 Predikciu pri oboch typoch úloh sa budeme snažiť realizovať pomocou 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Využijeme tiež demografické údaje, napr. výšku, hmotnosť a vek. K tejto základnej množine atribútov sme sa dopracovali na základe doménovej znalosti a rozsiahlej prieskumnej analýzy. V častiach \ref{analyza_z_pohladu_pozicie} a \ref{analyza_z_pohladu_trhovej_hodnoty} sa venujeme výberu týchto atribútov a opisujeme dôvody, prečo sme niektoré atribúty do tejto množiny nezahrnuli.
 V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
 
 Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. 
 Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length} a tiež medzinárodnú reputáciu hráča.
 
+\section{Výber metrík pre evaluáciu úspešnosti TODO}
+\section{Predikcia pozície hráča (klasifikácia)}
+
+Úlohu sme sa v prvej etape rozhodli riešiť pomocou viacerých jednoduchých modelov. Klasifikácia hráča do 4 pozícií už pri základných nastaveniach modelov vykazovala vysokú úspešnosť. V nasledujúcej tabuľke uvádzame modely a ich úspešnosti pri predikcii pozície. Ako metriku sme sa rozhodli sledovať f1 skóre.
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \multirow{2}{*}{model} & \multicolumn{4}{l|}{f1-skóre (pozícia)} \\ \cline{2-5} 
+     & attack & defense & goalkeeper & middle \\ \hline
+    Rozhodovací strom & 0,74 & 0,86 & 1,0 & 0,76 \\ \hline
+    \begin{tabular}[c]{@{}l@{}}Logistická regresia\\ (10-násobná krížová validácia)\end{tabular} & 0,82 & 0,93 & 1,0 & 0,86 \\ \hline
+    Metóda podporných vektorov & 0,80 & 0,93 & 1,0 & 0,85 \\ \hline
+    \end{tabular}
+    \caption{\label{tab:f1_position4}Úspešnosti jednoduchých modelov pri predikcii 4 tried pozície}
+    \end{table}
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[height=10cm]{images/confusion_matrix_position4_logicticCV}
+        \caption{Chybová matica pre logistickú regresiu (4 pozície).}
+        \label{fig:confusion_4}
+    \end{figure}
+
+Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov významne nišia. F1-skóre je pre niektoré pozície vysoké (right defense = 0,92) ale niektoré pozície model vôbec nepredikoval (middle = 0,0) 
+Úlohu budeme ďalej riešiť pomocou neurónových sietí. 
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[height=10cm]{images/confusion_matrix_position13_logisticCV}
+    \caption{Chybová matica pre logistickú regresiu (13 pozícií).}
+    \label{fig:confusion_4}
+\end{figure}
+
+
+
+\section{Predikcia trhovej hodnoty hráča (regresia)}
+
+
 \section{Existujúce práce TODO dokoncit}
 Soto-Valero, C. na klasifikáciu pozície hráča do štyroch tried v rovnakom datasete najprv využil PCA na extrakciu čŕt a redukciu dimenzionality. Následne využil zhlukovanie na klasifikáciu hráčov do 4 pozícií a pomocou "gradient tree boosting" algoritmu ohodnotil dôležitosť jendotlivých atribútov. Medzi najdôležitejšie atribúty na predukciu patria "dribbling", "standing tackle" a "goalkeeper reflexes". \cite{RICYDE1165}
-
-
 
 \bibliographystyle{splncs04}
 \bibliography{references}
