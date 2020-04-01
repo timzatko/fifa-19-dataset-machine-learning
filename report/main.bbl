@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{AlbertoFernandez2018}
+{Alberto Fernandez}, {Salvador Garcia}, {Francisco Herrera}, {Nitesh V.
+  Chawla}: {SMOTE for Learning from Imbalanced Data: Progress and Challenges,
+  Marking the 15-year Anniversary}. Journal of Artificial Intelligence Research
+   \textbf{61},  863--905 (2018),
+  \url{https://www.jair.org/index.php/jair/article/view/11192}
+
+\bibitem{RICYDE1165}
+Soto-Valero, C.: A gaussian mixture clustering model for characterizing
+  football players using the ea sports' fifa video game system. [modelo basado
+  en agrupamiento de mixturas gaussianas para caracterizar futbolistas
+  utilizando el sistema de videojuegos fifa de ea sports]. RICYDE. Revista
+  Internacional de Ciencias del Deporte. doi:10.5232/ricyde  \textbf{13}(49)
+  (2017),
+  \url{https://www.cafyd.com/REVISTA/ojs/index.php/ricyde/article/view/1165}
+
+\end{thebibliography}

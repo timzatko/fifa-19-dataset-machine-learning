@@ -155,7 +155,7 @@ Z prieskumnej analýzy tiež vyplýva, že pre konkrétne pozície hráčov sú 
 %     \label{fig:value_position_boxenplot}
 % \end{figure}
 
-\subsection{Analýza z pohľadu trhovej hodnoty hráča}
+\subsection{Analýza z pohľadu trhovej hodnoty hráča} \label{analyza_z_pohladu_trhovej_hodnoty}
 Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atribútom `Value` a ostatnými numerickými atribútmi. Takmer lineárnu koreláciu (0.99) vykazuje atribút `Release Cause` (Fig. \ref{fig:wage_scatter_plot}). Hráči s vysokou trhovou hodnotou majú v datasete podpísanú zmluvu s vyššou výkupnou klauzulou. Vysokú koreláciu taktiež vykazujú atribúty `Overall` (0.631), `Wage` (0.850) a `International Reputation` (0.656).
 
 \begin{figure}%
@@ -215,9 +215,25 @@ V kapitole \ref{analyza_chybajucich_hodnot} sme opísali dôvod výskytu chýbaj
 
 \subsection {Vychýlené hodnoty}
 Rozdelenie číselných hodnôt v datasete sme podrobne analyzovali a vyzualizovali. Na základe podrobnej analýzy sme dospeli k záveru, že dataset neobsahuje žiadne vychýlené hodnoty.
-% \bibliographystyle{splncs04}
-% \bibliography{references}
 
-\section{Related work TODO}
+\subsection {Problém nevyváženosti tried}
+Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť jednotlivých tried (Fig.\ref{fig:position_grouping}), čo by mohlo negatívne ovplyvniť presnosť predikcie. Tento problém sme sa rozhodli riešiť algoritmom SMOTE, ktorý využíva tzv. "oversampling" a vytvára syntetické inštancie minoritnej triedy pomocou lineárnej kombinácie reálnych inštancií.\cite{AlbertoFernandez2018}
+
+
+\section {Výber atribútov} \label{vyber_atributov}
+Predikciu pri oboch typoch úloh sa budeme snažiť realizovať pomocou 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Využijeme tiež demografické údaje, napr. výšku, hmotnosť a vek. K tejto základnej množine atribútov sme sa dopracovali na základe doménovej znalosti a rozsiahlej prieskumnej analýzy. V častiach \ref{analyza_z_pohladu_pozicie} a \ref{analyza_z_pohladu_trhovej_hodnoty} sa venujeme výberu týchto atribútov a opisujeme dôvody, prečo sme niektoré atribúty do tejto množiny nezahrnuli.
+V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
+
+Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. 
+Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length} a tiež medzinárodnú reputáciu hráča.
+
+\section{Existujúce práce TODO dokoncit}
+Soto-Valero, C. na klasifikáciu pozície hráča do štyroch tried v rovnakom datasete najprv využil PCA na extrakciu čŕt a redukciu dimenzionality. Následne využil zhlukovanie na klasifikáciu hráčov do 4 pozícií a pomocou "gradient tree boosting" algoritmu ohodnotil dôležitosť jendotlivých atribútov. Medzi najdôležitejšie atribúty na predukciu patria "dribbling", "standing tackle" a "goalkeeper reflexes". \cite{RICYDE1165}
+
+
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+
 
 \end{document}
