@@ -1,4 +1,4 @@
-from sklearn.metrics import classification_report, plot_confusion_matrix, mean_squared_error, mean_squared_log_error, explained_variance_score
+from sklearn.metrics import classification_report, plot_confusion_matrix, mean_squared_error, mean_squared_log_error, explained_variance_score, f1_score
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -28,6 +28,11 @@ def custom_classification_report(clf, labels, x_test, y_test, **kwargs):
             print(f'{key}: {clf_report[key]}')
 
         print('\n')
+        
+    print(f'\033[1mF1\033[0m')
+    for average in ['micro', 'macro']:
+        print(f'{average}: {f1_score(y_test, y_pred, average=average)}')
+    print('\n')
 
     if kwargs.get('plot_confusion_matrix', True):
         matplotlib.rcParams.update({'font.size': 29})
@@ -58,6 +63,11 @@ def custom_classification_report_nn(clf, labels, x_test, y_test, **kwargs):
             print(f'{key}: {clf_report[key]}')
 
         print('\n')
+        
+    print(f'\033[1mF1\033[0m')
+    for average in ['micro', 'macro', 'samples', 'weighted']:
+        print(f'{average}: {f1_score(y_test, y_pred, average=average)}')
+    print('\n')
     
     
 def custom_regression_report(clf, x_test, y_test, **kwargs):
