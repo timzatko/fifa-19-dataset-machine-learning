@@ -44,14 +44,9 @@ Táto práca obsahuje analýzu dát hráčov z hry FIFA 19, opis dát a ich char
 \keywords{Analýza dát, FIFA 19, Strojové Učenie, Regresia, Klasifikácia}
 \end{abstract}
 
-%
-% https://drive.google.com/drive/u/0/folders/1nwkbhB1-NqVBd7KRJBFtTLefISel52dH
-% Budeme pisat v anglictine? Ja by som rad ale treba sa spytat cviciaceho...
-%
-
 \section{Opis problému a motivácia}
 
-Rozhodli sme sa pre analýzu dát hráčov z hry FIFA 19. V hre sa nachádza veľké množstvo hráčov z rôznych krajín, hrajúcich v rôznych súťažiach. Ich schopnosti v hre by mali odzrkadlovať ich schopnosti z reálneho sveta. Tvorcovia hry sa o to snažia vytvorením herných atribútov, akými sú napríklad rýchlosť šprintu, sila strely, zakončovanie alebo hlavičkovanie. Keďže dokázali vyjadriť tieto schopnosti hráčov číselne (na určitej škále), zaujíma nás či, a ako herná pozícia hráča závisí od týchto atribútov. Ďaľšou zaujímavou otázkou je ako tieto atribúty (a ktoré najviac) vplývajú na trhovú cenu hráča v hre.
+Rozhodli sme sa pre analýzu dát hráčov z hry FIFA 19. V hre sa nachádza veľké množstvo hráčov z rôznych krajín, hrajúcich v rôznych súťažiach. Ich schopnosti v hre by mali odzrkadlovať ich schopnosti z reálneho sveta. Tvorcovia hry sa o to snažia vytvorením herných atribútov, akými sú napríklad rýchlosť šprintu, sila strely, zakončovanie alebo hlavičkovanie ktoré dokázali vyjadriť číselne. V projekte sa budeme snažiť na základe týchto atribútov klasifikovať hráčov do hernej pozície a predikovať ich trhovú hodnotu v hre. Keďže hra hráčom neukazuje vždy trhovú hodnotu hráča, ale len jeho atribúty, náš model môže byť užitočný pri určovaní výšky ponúkanej sumy za prestup hráča pri vyjednávaní v hre. Keďže v reálnom svete schopnosti hráčov (napr. zakončovanie) niesú nijako numericky vyjadrené skúsime využiť to, že v hre vyjadrené sú, na zistenie, ktoré atribúty sú dôležité pre určité herné pozície.
 
 \section{Opis dát s charakteristika dát}
  
