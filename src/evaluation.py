@@ -79,11 +79,11 @@ def custom_regression_report(clf, x_test, y_test, **kwargs):
     print(f'Explained variance - uniform_average (higher is better): {explained_variance_score(y_test, y_pred, multioutput="uniform_average")}')
     print(f'Explained variance - variance_weighted (higher is better): {explained_variance_score(y_test, y_pred, multioutput="variance_weighted")}')
     
-    data = pd.DataFrame(data={ 'y_test': y_test / 1000000, 'y_pred': y_pred / 1000000 })
+    data = pd.DataFrame(data={ 'true': y_test / 1000000, 'predicted': y_pred / 1000000 })
     max_value = max(max(y_test), max(y_pred)) / 1000000
     
     plt.xlim(0, max_value)
     plt.ylim(0, max_value)
-    sns.scatterplot(x='y_test', y='y_pred', data=data)
+    sns.scatterplot(x='true', y='predicted', data=data)
   
     print('\n')
