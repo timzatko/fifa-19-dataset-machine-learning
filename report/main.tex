@@ -167,8 +167,8 @@ Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atri
 
 Rozhodli sme sa, že budeme vykonávať nasledujúce úlohy:
 \begin{itemize}
-    \item predikcia hernej pozície hráča -- všeobecnej (4 triedy), rozšírenej (13 tried)
-    \item predikcia hodnoty hráča (atribút s názvom `Value`)
+    \item predikcia hernej pozície hráča -- všeobecnej (4 triedy), rozšírenej (13 tried) -- \textit{klasifikácia}
+    \item predikcia hodnoty hráča (atribút s názvom `Value`) -- \textit{regresia}
 \end{itemize}
 
 Obe tieto úlohy budeme realizovať z atribútov určujúcich herné shopnosti hráča a následne zo všetkých atribútov. Výsledky porovnáme a očakávame, že model natrénovaný zo všetkých atribútov bude výrazne lepší, keďže niektoré atribúty výrazne ovplyvňujú predikovanú premennú a to -- Release Clause - Value; Jersey Number - Position. 
@@ -179,7 +179,7 @@ Predpokladáme, že bude potrebné vykonať nasledovné úlohy:
 \begin{itemize}
     \item predspracovanie kategorických hodnôt (tj. one-hot encoding)
     \item normalizácia dát
-    \item odstránenie odľahlých pozorovaní
+    \item over-sampling
     \item trénovanie modelu
 \end{itemize}
 
