@@ -219,8 +219,11 @@ Predikciu pri oboch typoch úloh budeme realizovať pomocou 34 atribútov definu
 % -- toto uvidime ci budeme robit, mame uz toho aj tak dost
 % V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
 Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length}.
+Množinu vybranýcha atribútov sa pravdepodobne ešte pokúsime zredukovať (angl. feature selection). V závislosti od modelu zvolíme konkrétny prístup. Niektoré modely podporujú tzv. \textit{feature importances}, u modelov, ktoré to nepodorujú môžeme použiť rekurzívnu elimináciu atribútov alebo prírodou inšpirované algoritmy ktoré v tejto oblasti dosahujú veľmi dobré výsledky \cite{zawbaa2018large}.
 
-Množinu vybranýcha atribútov sa pravdepodobne ešte pokúsime zredukovať (angl. feature selection). V závislosti od modelu zvolíme konkrétny prístup. Niektoré modely podporujú tzv. \textit{feature importances}, u modelov, ktoré to nepodorujú môžeme použiť rekurzívnu elimináciu atribútov alebo prírodou inšpirované algoritmy \cite{zawbaa2018large}.
+\section{Príbuzná práca}
+
+V našej doméne (avšak na dátach zo staršej verzie hry) Soto-Valero, C. \cite{RICYDE1165} zisťoval, ktoré atribúty sú dôležité pre jednotlivé herné pozície. Využil PCA na zredukovanie dimenzionality zo všetkých herných atribútov a následne zhlukovaním klasifikoval hráčov do jednotlivých herných pozící. Následne pomocou algoritmu \textit{Gradient tree boosting} ohodnotil dôležitosť jendotlivých atribútov. Na klasifikovanie využil takzvané učenie bez učiteľa čím sa jeho práca líši od tej našej.
 
 \section{Výber metrík pre evaluáciu úspešnosti}
 
@@ -228,46 +231,52 @@ Množinu vybranýcha atribútov sa pravdepodobne ešte pokúsime zredukovať (an
 
 \paragraph{Regresia} -- pri regresii budeme sledovať metriku s názvom \textbf{RMSE} (Root Mean Sqaure Error).
 
-\section{Predikcia pozície hráča (klasifikácia)}
+\section{Experimenty}
 
-Úlohu sme sa v prvej etape rozhodli riešiť pomocou viacerých jednoduchých modelov. Klasifikácia hráča do 4 pozícií už pri základných nastaveniach modelov vykazovala vysokú úspešnosť. V nasledujúcej tabuľke uvádzame modely a ich úspešnosti pri predikcii pozície. Ako metriku sme sa rozhodli sledovať f1 skóre.
+\subsection{Predikcia pozície hráča (klasifikácia)}
+
+Úlohu sme sa v prvej etape rozhodli riešiť pomocou viacerých jednoduchých modelov. Klasifikácia hráča do 4 pozícií už pri základných nastaveniach modelov vykazovala vysokú úspešnosť \ref{tab:f1_position_4}. Model sa najviac mýlil pri klasifikácii do triedy \textit{middle}. Je to pochopiteľné, keďže stredopoliari sú "medzi" útočníkmi a obrancami \ref{fig:confusion_matrix_position_4}. 
+
+Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov významne nišia a niektoré triedy jednotlivé modely dokonca vôbec nepredikovali.
+
+% https://tablesgenerator.com/#
 \begin{table}[]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|}
+    \begin{tabular}{|l|rrrrr|r|}
     \hline
-    \multirow{2}{*}{model} & \multicolumn{4}{l|}{f1-skóre (pozícia)} \\ \cline{2-5} 
-     & attack & defense & goalkeeper & middle \\ \hline
-    Rozhodovací strom & 0,74 & 0,86 & 1,0 & 0,76 \\ \hline
-    \begin{tabular}[c]{@{}l@{}}Logistická regresia\\ (10-násobná krížová validácia)\end{tabular} & 0,82 & 0,93 & 1,0 & 0,86 \\ \hline
-    Metóda podporných vektorov & 0,80 & 0,93 & 1,0 & 0,85 \\ \hline
+    \multicolumn{1}{|c|}{\multirow{2}{*}{Model}} & \multicolumn{5}{c|}{Position (4) -- f1 skóre}  & \multicolumn{1}{l|}{Position (13) -- f1 skóre} \\
+    \multicolumn{1}{|c|}{}                       & Attack & Defense & Goalkeeper & Middle & Micro & Micro                                          \\ \cline{2-7} 
+    Rozhodovací strom                            & 0.74   & 0.87    & 1          & 0.76   & 0.81  & 0.55                                           \\
+    Logistická regresia                          & 0.82   & 0.94    & 1          & 0.87   & 0.87  & 0.71                                           \\
+    SVM                                          & 0.81   & 0.93    & 1          & 0.84   & 0.88  & 0.66                                           \\
+    Náhodný les                                  & 0.81   & 0.93    & 1          & 0.86   & 0.89  & 0.68                                           \\ \hline
     \end{tabular}
-    \caption{\label{tab:f1_position4}Úspešnosti jednoduchých modelov pri predikcii 4 tried pozície}
-    \end{table}
+    \\
+    \caption{\label{tab:f1_position_4} Úspešnosti jednoduchých modelov pri predikcii `Position 4` a `Position 13`. Pre predikciu štyroch herných pozícií zobrazujeme aj metriku \textbf{f1} pre jednotlivé pozície. V oboch prípadoch bola najlepšia logistická regresia a náhodný les.}
+\end{table}
 
-    \begin{figure}[htp]
-        \centering
-        \includegraphics[height=10cm]{images/confusion_matrix_position4_logicticCV}
-        \caption{Chybová matica pre logistickú regresiu (4 pozície).}
-        \label{fig:confusion_4}
-    \end{figure}
+\begin{figure}%
+    \centering
+    \subfloat[Matica zmätenia pre model náhodny les.]{{ 
+        \includegraphics[width=5.5cm]{images/confusion_matrix_position_4_random_forest}
+    }}%
+    \qquad
+    \subfloat[Matica zmätenia pre model logistickej regresie.]{{
+        \includegraphics[width=5.5cm]{images/confusion_matrix_position_4_logistic_regression}
+    }}%
+    \caption{Matice zmätenia pre dva z našich antrénovaných modelov, môžeme si všimnúť že model robí chyby pri klasifikácii do triedy \textit{middle}.}%
+    \label{fig:confusion_matrix_position_4}%
+\end{figure}
 
-Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov významne nišia. F1-skóre je pre niektoré pozície vysoké (right defense = 0,92) ale niektoré pozície model vôbec nepredikoval (middle = 0,0) 
-Úlohu budeme ďalej riešiť pomocou neurónových sietí. 
+\subsection{Predikcia trhovej hodnoty hráča (regresia)}
+
+Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky \ref{fig:wage_value_scatter_plot}.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[height=10cm]{images/confusion_matrix_position13_logisticCV}
-    \caption{Chybová matica pre logistickú regresiu (13 pozícií).}
-    \label{fig:confusion_4}
+    \includegraphics[height=5cm]{images/wage_value_scatter_plot}
+    \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov v miliónoch. Zatiaľ sa nám nepodarilo dosiahnúť lepšie výsledky (\textit{RMSE = 3,560331}).}
+    \label{fig:wage_value_scatter_plot}
 \end{figure}
-
-
-
-\section{Predikcia trhovej hodnoty hráča (regresia)}
-
-
-\section{Existujúce práce TODO dokoncit}
-Soto-Valero, C. na klasifikáciu pozície hráča do štyroch tried v rovnakom datasete najprv využil PCA na extrakciu čŕt a redukciu dimenzionality. Následne využil zhlukovanie na klasifikáciu hráčov do 4 pozícií a pomocou "gradient tree boosting" algoritmu ohodnotil dôležitosť jendotlivých atribútov. Medzi najdôležitejšie atribúty na predukciu patria "dribbling", "standing tackle" a "goalkeeper reflexes". \cite{RICYDE1165}
 
 \bibliographystyle{splncs04}
 \bibliography{references}
