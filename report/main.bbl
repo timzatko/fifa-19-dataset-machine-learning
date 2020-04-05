@@ -10,6 +10,10 @@
    \textbf{61},  863--905 (2018),
   \url{https://www.jair.org/index.php/jair/article/view/11192}
 
+\bibitem{opitz2019macro}
+Opitz, J., Burst, S.: Macro f1 and macro f1. arXiv preprint arXiv:1911.03347
+  (2019)
+
 \bibitem{RICYDE1165}
 Soto-Valero, C.: A gaussian mixture clustering model for characterizing
   football players using the ea sports' fifa video game system. [modelo basado
@@ -18,5 +22,10 @@ Soto-Valero, C.: A gaussian mixture clustering model for characterizing
   Internacional de Ciencias del Deporte. doi:10.5232/ricyde  \textbf{13}(49)
   (2017),
   \url{https://www.cafyd.com/REVISTA/ojs/index.php/ricyde/article/view/1165}
+
+\bibitem{zawbaa2018large}
+Zawbaa, H.M., Emary, E., Grosan, C., Snasel, V.: Large-dimensionality
+  small-instance set feature selection: A hybrid bio-inspired heuristic
+  approach. Swarm and Evolutionary Computation  \textbf{42},  29--42 (2018)
 
 \end{thebibliography}

@@ -186,12 +186,12 @@ Predpokladáme, že bude potrebné vykonať nasledovné úlohy:
 Trénovanie modelu zahŕňa výber atribútov (angl. feature selection) a výber a trénovanie modelu. Na úlohu predikcie hodnoty hráča budeme pravdepodobne používať lineárnu regresiu/neurónovú sieť a na určenie hernej pozície hráča rozhodovací strom / náhodný les / SVM / neurónovú sieť.
 
 \section{Predspracovanie dát}
-Prvotnému predspracovaniu dát na účely analýzy sme sa venovali v kapitole \ref{ocistenie_dat}
-Jedná sa o nasledujúce transformácie dát:
+
+Prvotnému predspracovaniu dát na účely analýzy sme sa venovali v kapitole \ref{ocistenie_dat} kde sme vykonali nasledovné transformácie dát:
 \begin{itemize}
-    \item Transformácia hodnôt peňažných atribútov (napr. hodnoty 1.2M, 200K sme transformovali na jednotný numerický tvar)
-    \item Dátumové atribúty sme transformovali na jednotný tvar, reprezentovaný UNIX časovou pečiatkou
-    \item Atribúty miery (napr. výška a hmotnosť hráča) sme transformovali tak, aby boli v spoločných jednotkách
+    \item Transformácia hodnôt peňažných atribútov (napr. hodnoty `1.2 M`, `200 K` sme transformovali na jednotný numerický tvar)
+    \item Dátumové atribúty sme transformovali do jednotného formátu, reprezentovaného UNIX-ovou časovou pečiatkou
+    \item Atribúty miery (napr. výška a hmotnosť hráča) sme previedli do rovnakých jednotiek.
     \item Špeciálne pozície hráča boli udávané v tvare reťazca \textit{Value+Grow}. Atribúty špeciálnych pozícií sme rozdelili na dvojice aby nám vznikli numerické atribúty.
     \item Atribút \textit{Work Rate} bol udávaný reťazcom v tvare \textit{Attack/Defense}. Tento atribút sme tiež rozdelili na 2 numerické.
     \item Boolean atribúty udávané reťazcami sme transformovali na numerické 0/1
@@ -199,25 +199,35 @@ Jedná sa o nasledujúce transformácie dát:
     \item Vytvorili sme atribút \textit{Contract length}, ktorý reprezentuje dĺžku aktuálne podpísanej zmluvy hráča 
 \end{itemize}
 
-Pre účely klasifikačnej a regresnej úlohy sme sa rozhodli kategorické atribúty kódovať pomocou "One-Hot encoding" -u. Numerické atribúty sa nachádzali v rôznych rozsahoch a jednotkách (napríklad hmotnosť v lb, výška v cm, rôzne schopnosti hráča v rozsahu [0,100]). Rozhodli sme sa ich normalizovať na jednotný interval [0,1].
+Kategorické atribúty sme transformovali metódou "One-Hot Encoding". Numerické atribúty sa nachádzali v rôznych rozsahoch a jednotkách (napríklad hmotnosť v lb, výška v cm, rôzne schopnosti hráča v rozsahu $<0,100>$). Rozhodli sme sa ich normalizovať do jednoetného intervalu $<0,1>$.
 
-\subsection {Chýbajúce hodnoty}
-V kapitole \ref{analyza_chybajucich_hodnot} sme opísali dôvod výskytu chýbajúcich hodnôt. Chýbajúce hodnoty opísané v kapitole \ref{analyza_chybajucich_hodnot} považujeme za opodstatnené a nebudeme ich nahrádzať.
+\subsection{Chýbajúce hodnoty}
 
-\subsection {Vychýlené hodnoty}
-Rozdelenie číselných hodnôt v datasete sme podrobne analyzovali a vyzualizovali. Na základe podrobnej analýzy sme dospeli k záveru, že dataset neobsahuje žiadne vychýlené hodnoty.
+V kapitole \ref{analyza_chybajucich_hodnot} sme opísali dôvod výskytu chýbajúcich hodnôt. Chýbajúce hodnoty opísané v kapitole \ref{analyza_chybajucich_hodnot} považujeme za opodstatnené a nebudeme ich nahrádzať. Tj. dané hdonoty chýbajú pretože majú chýbať a nie preto, že by boli dáta neúplné.
 
-\subsection {Problém nevyváženosti tried}
-Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť jednotlivých tried (Fig.\ref{fig:position_grouping}), čo by mohlo negatívne ovplyvniť presnosť predikcie. Tento problém sme sa rozhodli riešiť algoritmom SMOTE, ktorý využíva tzv. "oversampling" a vytvára syntetické inštancie minoritnej triedy pomocou lineárnej kombinácie reálnych inštancií.\cite{AlbertoFernandez2018}
+\subsection{Vychýlené hodnoty}
+
+Rozdelenie číselných hodnôt v dátovej sade sme podrobne analyzovali a vyzualizovali. Vychýlené hodnoty sú iba v niektorých atribútoch 
+
+\subsection{Problém nevyváženosti tried}
+
+Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť jednotlivých tried (Fig.\ref{fig:position_grouping}), čo by mohlo negatívne ovplyvniť presnosť predikcie. Tento problém sme sa rozhodli riešiť metódou nazývanou \textit{oversampling} a konkrétne algoritmom SMOTE \cite{AlbertoFernandez2018} ktorý vytvára syntetické inštancie minoritných tried/y pomocou lineárnej kombinácie reálnych inštancií.
 
 \section{Výber atribútov}
-Predikciu pri oboch typoch úloh sa budeme snažiť realizovať pomocou 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Využijeme tiež demografické údaje, napr. výšku, hmotnosť a vek. K tejto základnej množine atribútov sme sa dopracovali na základe doménovej znalosti a rozsiahlej prieskumnej analýzy. V častiach \ref{analyza_z_pohladu_pozicie} a \ref{analyza_z_pohladu_trhovej_hodnoty} sa venujeme výberu týchto atribútov a opisujeme dôvody, prečo sme niektoré atribúty do tejto množiny nezahrnuli.
-V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
 
-Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. 
-Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length} a tiež medzinárodnú reputáciu hráča.
+Predikciu pri oboch typoch úloh budeme realizovať pomocou 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Využijeme tiež demografické údaje, napr. výšku, hmotnosť a vek. K tejto základnej množine atribútov sme sa dopracovali na základe doménovej znalosti a rozsiahlej prieskumnej analýzy. V častiach \ref{analyza_z_pohladu_pozicie} a \ref{analyza_z_pohladu_trhovej_hodnoty} sa venujeme výberu týchto atribútov a opisujeme dôvody, prečo sme niektoré atribúty do tejto množiny nezahrnuli.
+% -- toto uvidime ci budeme robit, mame uz toho aj tak dost
+% V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
+Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length}.
 
-\section{Výber metrík pre evaluáciu úspešnosti TODO}
+Množinu vybranýcha atribútov sa pravdepodobne ešte pokúsime zredukovať (angl. feature selection). V závislosti od modelu zvolíme konkrétny prístup. Niektoré modely podporujú tzv. \textit{feature importances}, u modelov, ktoré to nepodorujú môžeme použiť rekurzívnu elimináciu atribútov alebo prírodou inšpirované algoritmy \cite{zawbaa2018large}.
+
+\section{Výber metrík pre evaluáciu úspešnosti}
+
+\paragraph{Klasifikácia} -- keďže klasifikujeme do 4 resp. 13 tried, ktoré sú nevyvážené, budeme sledovať metriku \textbf{f1 micro}. Táto metrika je harmonickým priemerom \textit{precision} a \textit{recall}. \textbf{micro} varianta sa používa keď sú predikované triedy nevyvážené \cite{opitz2019macro}.
+
+\paragraph{Regresia} -- pri regresii budeme sledovať metriku s názvom \textbf{RMSE} (Root Mean Sqaure Error).
+
 \section{Predikcia pozície hráča (klasifikácia)}
 
 Úlohu sme sa v prvej etape rozhodli riešiť pomocou viacerých jednoduchých modelov. Klasifikácia hráča do 4 pozícií už pri základných nastaveniach modelov vykazovala vysokú úspešnosť. V nasledujúcej tabuľke uvádzame modely a ich úspešnosti pri predikcii pozície. Ako metriku sme sa rozhodli sledovať f1 skóre.
