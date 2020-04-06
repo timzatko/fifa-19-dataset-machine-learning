@@ -227,7 +227,9 @@ V našej doméne (avšak na dátach zo staršej verzie hry) Soto-Valero, C. \cit
 
 \section{Výber metrík pre evaluáciu úspešnosti}
 
-\paragraph{Klasifikácia} -- keďže klasifikujeme do 4 resp. 13 tried, ktoré sú nevyvážené, budeme sledovať metriku \textbf{f1 micro}. Táto metrika je harmonickým priemerom \textit{precision} a \textit{recall}. \textbf{micro} varianta sa používa keď sú predikované triedy nevyvážené \cite{opitz2019macro}.
+\paragraph{Klasifikácia} -- keďže klasifikujeme do 4 resp. 13 tried, ktoré sú nevyvážené, budeme sledovať metriky \textbf{f1 micro} a \textbf{f1 micro}.
+Táto metrika je harmonickým priemerom \textit{precision} a \textit{recall} \cite{opitz2019macro}.
+Nás zaujíma predovšetkým varianta \textbf{micro}, keďže máme nevyvážené triedy a chceme aby metrika brala do úvahy početnosti tried (tj. náš model nemusí byť taký dobrý v klasifikácii minoritných tried). Budeme tiež sledovať aj variantu \textbf{macro}, ktorá berie do úvahy všetky triedy rovnako.
 
 \paragraph{Regresia} -- pri regresii budeme sledovať metriku s názvom \textbf{RMSE} (Root Mean Sqaure Error).
 
@@ -241,14 +243,14 @@ Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov vý
 
 % https://tablesgenerator.com/#
 \begin{table}[]
-    \begin{tabular}{|l|rrrrr|r|}
+    \begin{tabular}{|l|rrrrrr|rr}
     \hline
-    \multicolumn{1}{|c|}{\multirow{2}{*}{Model}} & \multicolumn{5}{c|}{Position (4) -- f1 skóre}  & \multicolumn{1}{l|}{Position (13) -- f1 skóre} \\
-    \multicolumn{1}{|c|}{}                       & Attack & Defense & Goalkeeper & Middle & Micro & Micro                                          \\ \cline{2-7} 
-    Rozhodovací strom                            & 0.74   & 0.87    & 1          & 0.76   & 0.81  & 0.55                                           \\
-    Logistická regresia                          & 0.82   & 0.94    & 1          & 0.87   & 0.87  & 0.71                                           \\
-    SVM                                          & 0.81   & 0.93    & 1          & 0.84   & 0.88  & 0.66                                           \\
-    Náhodný les                                  & 0.81   & 0.93    & 1          & 0.86   & 0.89  & 0.68                                           \\ \hline
+    \multicolumn{1}{|c|}{\multirow{2}{*}{Model}} & \multicolumn{6}{c|}{Position (4) -- f1 skóre}                               & \multicolumn{2}{l|}{Position (13) -- f1 skóre} \\
+    \multicolumn{1}{|c|}{}                       & Attack & Defense & GK         & Middle & Micro & \multicolumn{1}{l|}{Macro} & Micro       & \multicolumn{1}{l|}{Macro}       \\ \hline
+    Rozhodovací strom                            & 0.74   & 0.87    & 1          & 0.76   & 0.81  & 0.84                       & 0.55        & \multicolumn{1}{r|}{0.42}        \\
+    Logistická regresia                          & 0.82   & 0.94    & 1          & 0.87   & 0.87  & 0.90                       & 0.71        & \multicolumn{1}{r|}{0.53}        \\
+    SVM                                          & 0.81   & 0.93    & 1          & 0.84   & 0.88  & 0.89                       & 0.66        & \multicolumn{1}{r|}{0.44}        \\
+    Náhodný les                                  & 0.81   & 0.93    & 1          & 0.86   & 0.89  & 0.89                       & 0.68        & \multicolumn{1}{r|}{0.50}        \\ \hline
     \end{tabular}
     \\
     \caption{\label{tab:f1_position_4} Úspešnosti jednoduchých modelov pri predikcii `Position 4` a `Position 13`. Pre predikciu štyroch herných pozícií zobrazujeme aj metriku \textbf{f1} pre jednotlivé pozície. V oboch prípadoch bola najlepšia logistická regresia a náhodný les.}
@@ -263,19 +265,19 @@ Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov vý
     \subfloat[Matica zmätenia pre model logistickej regresie.]{{
         \includegraphics[width=5.5cm]{images/confusion_matrix_position_4_logistic_regression}
     }}%
-    \caption{Matice zmätenia pre dva z našich antrénovaných modelov, môžeme si všimnúť že model robí chyby pri klasifikácii do triedy \textit{middle}.}%
+    \caption{Matice zmätenia pre dva z našich natrénovaných modelov, môžeme si všimnúť že model robí chyby pri klasifikácii do triedy \textit{middle}.}%
     \label{fig:confusion_matrix_position_4}%
 \end{figure}
 
 \subsection{Predikcia trhovej hodnoty hráča (regresia)}
 
-Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky \ref{fig:wage_value_scatter_plot}.
+Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky \ref{fig:value_pred_true_scatterplot}.
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[height=5cm]{images/wage_value_scatter_plot}
+    \includegraphics[height=5cm]{images/value_pred_true_scatterplot}
     \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov v miliónoch. Zatiaľ sa nám nepodarilo dosiahnúť lepšie výsledky (\textit{RMSE = 3,560331}).}
-    \label{fig:wage_value_scatter_plot}
+    \label{fig:value_pred_true_scatterplot}
 \end{figure}
 
 \bibliographystyle{splncs04}
