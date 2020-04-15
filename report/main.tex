@@ -218,12 +218,16 @@ Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť je
 Predikciu pri oboch typoch úloh budeme realizovať pomocou 34 atribútov definujúcich futbalové schopnosti hráča určené hrou. Využijeme tiež demografické údaje, napr. výšku, hmotnosť a vek. K tejto základnej množine atribútov sme sa dopracovali na základe doménovej znalosti a rozsiahlej prieskumnej analýzy. V častiach \ref{analyza_z_pohladu_pozicie} a \ref{analyza_z_pohladu_trhovej_hodnoty} sa venujeme výberu týchto atribútov a opisujeme dôvody, prečo sme niektoré atribúty do tejto množiny nezahrnuli.
 % -- toto uvidime ci budeme robit, mame uz toho aj tak dost
 % V druhej etape riešenia vyskúšame úlohy predikcie realizovať s využitím všetkých atribútov a úspešnosti modelov porovnáme. Očakávame mierny nárast úspešnosti pri použití všetkých atribútov.
-Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length}.
+Pri riešení klasifikačnej úlohy rozšírime základnú sadu atribútov o atribúty \textit{Preferred Foot}, \textit{Work Rate Attack} a \textit{Work Rate Defense}. Pri regresnej úlohe využijeme dopočítaný atribút \textit{Contract Length} a využijeme tiež medzinárodnú reputáciu hráča (\textit{angl. International reputation}).
 Množinu vybranýcha atribútov sa pravdepodobne ešte pokúsime zredukovať (angl. feature selection). V závislosti od modelu zvolíme konkrétny prístup. Niektoré modely podporujú tzv. \textit{feature importances}, u modelov, ktoré to nepodorujú môžeme použiť rekurzívnu elimináciu atribútov alebo prírodou inšpirované algoritmy ktoré v tejto oblasti dosahujú veľmi dobré výsledky \cite{zawbaa2018large}.
 
 \section{Príbuzná práca}
 
 V našej doméne (avšak na dátach zo staršej verzie hry) Soto-Valero, C. \cite{RICYDE1165} zisťoval, ktoré atribúty sú dôležité pre jednotlivé herné pozície. Využil PCA na zredukovanie dimenzionality zo všetkých herných atribútov a následne zhlukovaním klasifikoval hráčov do jednotlivých herných pozící. Následne pomocou algoritmu \textit{Gradient tree boosting} ohodnotil dôležitosť jendotlivých atribútov. Na klasifikovanie využil takzvané učenie bez učiteľa čím sa jeho práca líši od tej našej.
+Yaldo L. a Shamir L. sa snažia riešiť problém predikcie týždenného platu futbalového hráča pomocou 8 rôznych algoritmov strojového učenia na podobnom FIFA datasete z roku 2016 \cite{yaldo2017}. Autori na predikciu využili napríklad aditívnu regresiu či rozhodovacie stromy. Plati hráčov sú predikované na základe ich pozície, ale aj atribútov hry, ktoré charakterizujú ich schopnosti.
+Zaujímavým zistením je fakt, že platy hráčov nezávisia len od ich schopností a pozície hráča, ale aj celkovej reputácie a jeho popularity. Známy hráč L. Messi by napríklad pri predikcii len na základe jeho schopností nedosiahol ani polovičný plat. Rozhodli sme sa teda medzinárodnú reputáciu hráča zahrnúť medzi črty použité na predikciu.
+Autori používajú Piersonov korelačný koeficient (CC) a priemernú absolútnu odchýlku (MAE) na meranie úspešnosti.
+
 
 \section{Výber metrík pre evaluáciu úspešnosti}
 
