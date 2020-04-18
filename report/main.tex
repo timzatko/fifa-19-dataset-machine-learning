@@ -147,7 +147,7 @@ Z prieskumnej analýzy tiež vyplýva, že pre konkrétne pozície hráčov sú 
 % \end{figure}
 
 \subsection{Analýza z pohľadu trhovej hodnoty hráča} \label{analyza_z_pohladu_trhovej_hodnoty}
-Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atribútom `Value` a ostatnými numerickými atribútmi. Takmer lineárnu koreláciu (0.99) vykazuje atribút `Release Cause` (Fig. \ref{fig:wage_scatter_plot}). Hráči s vysokou trhovou hodnotou majú v datasete podpísanú zmluvu s vyššou výkupnou klauzulou. Vysokú koreláciu taktiež vykazujú atribúty `Overall` (0.631), `Wage` (0.850) a `International Reputation` (0.656).
+Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atribútom `Value` a ostatnými numerickými atribútmi. Takmer lineárnu koreláciu (0.99) vykazuje atribút `Release Cause` (Fig. \ref{fig:wage_scatter_plot}). Hráči s vysokou trhovou hodnotou majú v dátovej sade podpísanú zmluvu s vyššou výkupnou klauzulou. Vysokú koreláciu taktiež vykazujú atribúty `Overall` (0.631), `Wage` (0.850) a `International Reputation` (0.656).
 
 \begin{figure}%
     \centering
@@ -225,9 +225,9 @@ Množinu vybraných atribútov sa pravdepodobne ešte pokúsime zredukovať (ang
 
 V našej doméne (avšak na dátach zo staršej verzie hry) Soto-Valero, C. \cite{RICYDE1165} zisťoval, ktoré atribúty sú dôležité pre jednotlivé herné pozície. Využil PCA na zredukovanie dimenzionality zo všetkých herných atribútov a následne zhlukovaním klasifikoval hráčov do jednotlivých herných pozící. Následne pomocou algoritmu \textit{Gradient tree boosting} ohodnotil dôležitosť jendotlivých atribútov. Na klasifikovanie využil takzvané učenie bez učiteľa, čím sa jeho práca líši od tej našej.
 
-Nazim R. a spol. sa snažia predikovať pozíciu hráča na základe podobných atribútov, avšak využívajú dataset zo športovej školy  \textit{Bukit Jalil Sports School}. Na klasifikáciu využívajú bayesovské siete, rozhodovacie stromy a algoritmus najbližšieho suseda. Hráči boli klasifikovaní do 10 tried. Vzhľadom na to, že dataset obsahoval len 100 prvkov sa autori rozhodli použiť \textit{"leave-one-out"} validáciu \cite{razali2017}.  
+Nazim R. a spol. sa snažia predikovať pozíciu hráča na základe podobných atribútov, avšak využívajú dátovú sadu zo športovej školy  \textit{Bukit Jalil Sports School}. Na klasifikáciu využívajú bayesovské siete, rozhodovacie stromy a algoritmus najbližšieho suseda. Hráči boli klasifikovaní do 10 tried. Vzhľadom na to, že dátova sáda obsahovala len 100 prvkov sa autori rozhodli použiť \textit{"leave-one-out"} validáciu \cite{razali2017}.  
 
-Yaldo L. a Shamir L. sa snažia riešiť problém predikcie týždenného platu futbalového hráča pomocou 8 rôznych algoritmov strojového učenia na podobnom FIFA datasete z roku 2016 \cite{yaldo2017}. Autori na predikciu využili napríklad aditívnu regresiu či rozhodovacie stromy. Platy hráčov sú predikované na základe ich pozície, ale aj atribútov hry, ktoré charakterizujú ich schopnosti.
+Yaldo L. a Shamir L. sa snažia riešiť problém predikcie týždenného platu futbalového hráča pomocou 8 rôznych algoritmov strojového učenia na podobnej dátovej sade FIFA z roku 2016 \cite{yaldo2017}. Autori na predikciu využili napríklad aditívnu regresiu či rozhodovacie stromy. Platy hráčov sú predikované na základe ich pozície, ale aj atribútov hry, ktoré charakterizujú ich schopnosti.
 Zaujímavým zistením je fakt, že platy hráčov nezávisia len od ich schopností a pozície hráča, ale aj celkovej reputácie a jeho popularity. Známy hráč L. Messi by napríklad pri predikcii len na základe jeho schopností nedosiahol ani polovičný plat. Rozhodli sme sa teda medzinárodnú reputáciu hráča zahrnúť medzi črty použité na predikciu.
 Autori používajú Piersonov korelačný koeficient (CC) a priemernú absolútnu odchýlku (MAE) na meranie úspešnosti.
 
@@ -278,7 +278,7 @@ Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov vý
 
 \subsection{Predikcia trhovej hodnoty hráča (regresia)}
 
-Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky \ref{fig:value_pred_true_scatterplot}.
+Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky (Obr. č.\ref{fig:value_pred_true_scatterplot}).
 
 \begin{figure}[htp]
     \centering
