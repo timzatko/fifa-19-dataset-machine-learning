@@ -65,7 +65,7 @@ def custom_classification_report_nn(clf, labels, x_test, y_test, **kwargs):
         print('\n')
         
     print(f'\033[1mF1\033[0m')
-    for average in ['micro', 'macro', 'samples', 'weighted']:
+    for average in ['micro', 'macro']:
         print(f'{average}: {f1_score(y_test, y_pred, average=average)}')
     print('\n')
     
