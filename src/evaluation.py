@@ -71,6 +71,8 @@ def custom_classification_report_nn(clf, labels, x_test, y_test, **kwargs):
     
     
 def custom_regression_report(clf, x_test, y_test, **kwargs):
+    show_plot = kwargs.get('show_plot', True)
+        
     y_pred = clf.predict(x_test)
     
     print(f'MSE: {mean_squared_error(y_test, y_pred)}')
@@ -78,12 +80,13 @@ def custom_regression_report(clf, x_test, y_test, **kwargs):
 #     print(f'MSLE: {mean_squared_log_error(y_test, y_pred)}')
     print(f'Explained variance - uniform_average (higher is better): {explained_variance_score(y_test, y_pred, multioutput="uniform_average")}')
     print(f'Explained variance - variance_weighted (higher is better): {explained_variance_score(y_test, y_pred, multioutput="variance_weighted")}')
-    
-    data = pd.DataFrame(data={ 'true': y_test / 1000000, 'predicted': y_pred / 1000000 })
-    max_value = max(max(y_test), max(y_pred)) / 1000000
-    
-    plt.xlim(0, max_value)
-    plt.ylim(0, max_value)
-    sns.scatterplot(x='true', y='predicted', data=data)
-  
+
+    if show_plot:
+        data = pd.DataFrame(data={ 'true': y_test / 1000000, 'predicted': y_pred / 1000000 })
+        max_value = max(max(y_test), max(y_pred)) / 1000000
+
+        plt.xlim(0, max_value)
+        plt.ylim(0, max_value)
+        sns.scatterplot(x='true', y='predicted', data=data)
+
     print('\n')
