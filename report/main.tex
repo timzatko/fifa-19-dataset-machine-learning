@@ -209,7 +209,7 @@ V kapitole \ref{analyza_chybajucich_hodnot} sme opísali dôvod výskytu chýbaj
 
 Rozdelenie číselných hodnôt v dátovej sade sme podrobne analyzovali a vizualizovali. Vychýlené hodnoty sú iba v niektorých atribútoch. 
 
-\subsection{Problém nevyváženosti tried}
+\subsection{Problém nevyváženosti tried \label{class_imbalance_problem}}
 
 Pri zoskúpení všetkých pozícií do 13 tried sme odhalili nevyváženosť jednotlivých tried (Fig.\ref{fig:position_grouping}), čo by mohlo negatívne ovplyvniť presnosť predikcie. Tento problém sme sa rozhodli riešiť metódou nazývanou \textit{oversampling} a konkrétne algoritmom SMOTE \cite{AlbertoFernandez2018}, ktorý vytvára syntetické inštancie minoritných tried/y pomocou lineárnej kombinácie reálnych inštancií.
 
@@ -286,6 +286,14 @@ Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa ná
     \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov v miliónoch. Zatiaľ sa nám nepodarilo dosiahnúť lepšie výsledky (\textit{RMSE = 3,560331}).}
     \label{fig:value_pred_true_scatterplot}
 \end{figure}
+
+\subsection{Oversampling}
+
+Keďže pri našej klasifikačnej úlohe sú jednotlivé triedy nevyvážené (\ref{class_imbalance_problem}) pokúsíli sme sa zvýšiť početnosti minoritných tried. Vyskúšali sme minoritné triedy dovzorkovávať náhodne a zároveň metódou SMOTE a jej variáciami (SVMSMOTE, BorderlineSMOTE). Tiež sme skúšali rôzne kombinácie hyperparametrov týchto metód.
+Ako model s pouižili náhodný les, keďže zo všetkých modelov sa trénoval najrýchlejšie a patril medzi najlepšie modely (Tab. \ref{tab:f1_position_4}). Pri klasifikácii do `Position 4` a `Position 13` oversampling modely výrazne nezlepšil.
+Pri všetkých modeloch sa zlepšila metrika \textit{f1 macro} a zas shoršila \textit{f1 micro}, tj. model sa zlepšil na klasifikácii minoritných tried na úkor mierneho zhoršenie klasifikácie tých majoritných.
+Najlepší model s použitím SMOTE bol lepší o 2 percentuálne body v metrike \textit{f1 macro} a 0.4 percentualného bodu horší v metrike \textit{f1 micro}.
+Použitím oversampling-u sme dosiahli iba mierne zlepšenie v klasifiácii.
 
 \bibliographystyle{splncs04}
 \bibliography{references}
