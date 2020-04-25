@@ -163,7 +163,7 @@ Pomocou Pearsonovho korelačného koeficientu sme hľadali korelácie medzi atri
 \end{figure}
 
 
-\section{Definovanie úlohy objavovania znalostí}
+\section{Definovanie úlohy objavovania znalostí \label{task_definition}}
 
 Rozhodli sme sa, že budeme vykonávať nasledujúce úlohy:
 \begin{itemize}
@@ -289,11 +289,34 @@ Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa ná
 
 \subsection{Oversampling}
 
-Keďže pri našej klasifikačnej úlohe sú jednotlivé triedy nevyvážené (\ref{class_imbalance_problem}) pokúsíli sme sa zvýšiť početnosti minoritných tried. Vyskúšali sme minoritné triedy dovzorkovávať náhodne a zároveň metódou SMOTE a jej variáciami (SVMSMOTE, BorderlineSMOTE). Tiež sme skúšali rôzne kombinácie hyperparametrov týchto metód.
+Keďže pri našej klasifikačnej úlohe sú jednotlivé triedy nevyvážené (Sekcia \ref{class_imbalance_problem}) pokúsíli sme sa zvýšiť početnosti minoritných tried. Vyskúšali sme minoritné triedy dovzorkovávať náhodne a zároveň metódou SMOTE a jej variáciami (SVM-SMOTE, BorderlineSMOTE). Tiež sme skúšali rôzne kombinácie hyperparamet-rov týchto metód.
 Ako model s pouižili náhodný les, keďže zo všetkých modelov sa trénoval najrýchlejšie a patril medzi najlepšie modely (Tab. \ref{tab:f1_position_4}). Pri klasifikácii do `Position 4` a `Position 13` oversampling modely výrazne nezlepšil.
 Pri všetkých modeloch sa zlepšila metrika \textit{f1 macro} a zas shoršila \textit{f1 micro}, tj. model sa zlepšil na klasifikácii minoritných tried na úkor mierneho zhoršenie klasifikácie tých majoritných.
 Najlepší model s použitím SMOTE bol lepší o 2 percentuálne body v metrike \textit{f1 macro} a 0.4 percentualného bodu horší v metrike \textit{f1 micro}.
 Použitím oversampling-u sme dosiahli iba mierne zlepšenie v klasifiácii.
+
+\subsection{Výber atribútov (angl. feature selection)}
+
+Jednotlivé atribúty sme zatiaľ vyberali iba na základe doménových znalostí a podľa nami definovanej úlohy objavovania znalostí (Sekcia \ref{task_definition}). Keďže je týchto atribútov stále veľa pokúsili sme sa ich zredukovať, aby sme mali jednoduchší a ľahšie interpretovateľný model. Vyskúšali sme niekoľko spôsobov, a to konkrétne: odstránenie atribútov z nízkou varianciou, výber atribútov na základe jednoroz-merných štatistických testov (angl. univariate feature selection), rekurzívnu eli-mináciu atribútov, výber na základe ich dôležisosti pre model (feature importances). Týmto jednotlivým metódam sme skúšali rôzne parametre a výber atribútov sme vykonávali pre klasifikačnú úlohu (klasifikátor - náhodný les) a aj pre regresnú úlohu (lineárna regresia).
+
+Výber atribútov výrazne nezlepšil úspešnosť modelu, ale ani nezhoršil, použitím polovice zo všetkých atribútov sme dosiahli tak dobré výsledky ako keby sme ich použili všetky (Obr. \ref{fig:feature_selection_classification_position}). Pri regresii bol tento trend podobný.
+
+Výberom atribútov sa nám podarilo natrénovať jednoduchšie modely s podobnou úspešnosťou ako bez výberu atribútov.
+
+\begin{figure}%
+    \centering
+    \subfloat[Úspešnosť pri klasifikácií `Position 4` podľa počtu použitých atribútov]{{ 
+        \includegraphics[width=5.5cm]{images/feature_selection_classification_position_4}
+    }}%
+    \qquad
+    \subfloat[Úspešnosť pri klasifikácií `Position 13` podľa počtu použitých atribútov]{{
+        \includegraphics[width=5.5cm]{images/feature_selection_classification_position_13}
+    }}%
+    \caption{Úspešnosti pri klasifikácií podľa počtu použitých atribútov. Graf vznikol použitím rekurzívnej eliminácie s krížovou validáciou (\textit{k=2}) na klasifikátore náhodný les.}%
+    \label{fig:feature_selection_classification_position}%
+\end{figure}
+
+\newpage
 
 \bibliographystyle{splncs04}
 \bibliography{references}
