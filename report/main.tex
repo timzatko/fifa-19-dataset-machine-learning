@@ -240,6 +240,36 @@ Nás zaujíma predovšetkým varianta \textbf{micro}, keďže máme nevyvážen�
 
 \paragraph{Regresia} -- pri regresii budeme sledovať metriku s názvom \textbf{RMSE} (Root Mean Sqaure Error).
 
+\section{Opis použitých algoritmov}
+
+\subsection{Predikcia pozície hráča (klasifikácia)}
+
+\paragraph{Rozhodovací strom} --
+klasifikátor založený na stromovej štruktúre. Uzly reprezentujú test vykonaný nad atribútom intancie a vetvy reprezentujú možné výsledky testu. Rozhodovací strom pri klasifikácii začína v koreni a postupne prechádza cez jednotlivé ulzy až k listu, ktorý reprezentuje výsledok klasifikácie (triedu). 
+
+\subsection{Predikcia trhovej hodnoty hráča (regresia)}
+
+\paragraph{Lineárna regresia} --
+algoritmus, ktorý sa pokúša modelovať vzťah medzi dvoma premennými pomocou lineárnej funkcie. Rovnica lineárnej regresie má tvar \[Y = kX + q\], kde \textit{Y} a \textit{X} sú závislé premenné, \textit{q} udáva posun a \textit{k} udáva sklon funkcie. Algoritmus je vhodný pri riešení regresných úloh, pri ktorých modelujeme lineárny vzťah medzi premennými. Vzájomnú koreláciu je vždy vhodné vopred overiť pomocou Pearsonovho korelačného koeficientu. 
+
+\subsection{Skupinové učenie (angl. "ensemble learning")}
+
+\paragraph{Náhodný les} --
+klasifikátor/regresor, ktorý využíva viacero rozhodovacích stromov, ktoré sú trénované nezávisle a každý pri klasifikácii dostane 1 hlas. Náhodný les následne vyberie triedu s najvyším počtom hlasov. Výhodou algoritmu je tiež zabránenie korelácie medzi jednotlivými rozhodovacími stromami vďaka využitiu "bagging" metódy. Rozhodovacie stromy sú trénované na množinách dát, ktoré vznikajú výberom s nahradzovaním (angl. "selection with replacement"). Vďaka tejto metóde výberu vznikajú rozhodovacie stromy rôznych šírok a hĺbok a práve ich rôznorodosť prispieva k úspešnosti algoritmu náhodného lesa.
+
+\paragraph{Adaboost} --
+klasifikátor/regresor založený na lineárnej kombinácii viacerých tzv. slabých klasifikátorov/regresorov, trénovaných na iteratívne modifikovaných dátach ("boosting" iteráciách). Iterácie pozostávajú z aplikácie váh \(w_1, w_2, ... w_N\), pričom N reprezentuje počet prvkov. Počas každej iterácie sú váhy nesprávne klasifikovaných prvkov z predchádzajúcej iterácie zvýšené, resp. znížené pri správnej klasifikácii. Pozorovania, ktoré je náročné správne klasifikovať postupne dostanú vysokú váhu a slabé klasifikátory sa pri ďalšom trénovaní zameriavajú na tieto pozorovania. Predikcie slabých klasifikátorov sú nakoniec kombinované a použité na finálnu predikciu.
+
+\paragraph{Gradient tree boosting} --
+klasifikátor/regresor využíva rozhodovacie stromy ako slabé klasifikátory/regresory. Rozhodovacie stromy sú postupne vytvárané a pridávané do množiny použitých slabých klasifikátorov s využitím metódy klesajúceho gradientu (angl. "gradient descent") na minimalizáciu chybovej funkcie. 
+
+\paragraph{Voting classifier/regressor} --
+klasifikátor/regresor kombinujúci výsledky viacerých rôznych klasifikátorov/regresorov. Použitie algoritmu je vhodné napríklad v prípade, keď máme viacero úspešných modelov na vyváženie ich slabostí. Metóda "hard voting" priradzuje každému modelu hlas s rovnakou váhou. Metóda "soft voting" umožňuje priradenie váhy hlasom jednotlivých modelov.  
+
+\paragraph{Stacked generalization} --
+klasifikátor/regresor kombinujúci výsledky viacerých modelov. Výsledky modelov sú vstupom finálneho modelu, ktorý je trénovaný s využitím krížovej validácie. 
+
+
 \section{Experimenty}
 
 \subsection{Predikcia pozície hráča (klasifikácia)}
@@ -315,10 +345,6 @@ Výberom atribútov sa nám podarilo natrénovať jednoduchšie modely s podobno
     \caption{Úspešnosti pri klasifikácií podľa počtu použitých atribútov. Graf vznikol použitím rekurzívnej eliminácie s krížovou validáciou (\textit{k=2}) na klasifikátore náhodný les.}%
     \label{fig:feature_selection_classification_position}%
 \end{figure}
-
-\subsection{Ensemble}
-
-TODO:
 
 \subsection{Hyper-parameter tunning}
 
