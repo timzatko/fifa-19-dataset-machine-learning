@@ -15,6 +15,8 @@
 \usepackage{subfig}
 \usepackage{multirow}
 
+\usepackage{hyperref}
+
 \begin{document}
 %
 % \title{Contribution Title\thanks{Supported by organization x.}}
@@ -171,7 +173,7 @@ Rozhodli sme sa, že budeme vykonávať nasledujúce úlohy:
     \item predikcia hodnoty hráča (atribút s názvom `Value`) -- \textit{regresia}
 \end{itemize}
 
-Obe tieto úlohy budeme realizovať z atribútov určujúcich herné shopnosti hráča a následne zo všetkých atribútov. Výsledky porovnáme a očakávame, že model natrénovaný zo všetkých atribútov bude výrazne lepší, keďže niektoré atribúty výrazne ovplyvňujú predikovanú premennú a to -- Release Clause - Value; Jersey Number - Position. 
+Obe tieto úlohy budeme realizovať z atribútov určujúcich herné shopnosti hráča a nie zo všetkých atribútov, keďže niektoré atribúty výrazne ovplyvňujú predikovanú premennú a to -- Release Clause - Value; Jersey Number - Position. 
 
 \section{Predpokladaný scenár riešenia (problémy)}
 
@@ -250,7 +252,7 @@ klasifikátor založený na stromovej štruktúre. Uzly reprezentujú test vykon
 \subsection{Predikcia trhovej hodnoty hráča (regresia)}
 
 \paragraph{Lineárna regresia} --
-algoritmus, ktorý sa pokúša modelovať vzťah medzi dvoma premennými pomocou lineárnej funkcie. Rovnica lineárnej regresie má tvar \[Y = kX + q\], kde \textit{Y} a \textit{X} sú závislé premenné, \textit{q} udáva posun a \textit{k} udáva sklon funkcie. Algoritmus je vhodný pri riešení regresných úloh, pri ktorých modelujeme lineárny vzťah medzi premennými. Vzájomnú koreláciu je vždy vhodné vopred overiť pomocou Pearsonovho korelačného koeficientu. 
+algoritmus, ktorý sa pokúša modelovať vzťah medzi dvoma premennými pomocou lineárnej funkcie. Rovnica lineárnej regresie má tvar $Y = kX + q$, kde \textit{Y} a \textit{X} sú závislé premenné, \textit{q} udáva posun a \textit{k} udáva sklon funkcie. Algoritmus je vhodný pri riešení regresných úloh, pri ktorých modelujeme lineárny vzťah medzi premennými. Vzájomnú koreláciu je vždy vhodné vopred overiť pomocou Pearsonovho korelačného koeficientu. 
 
 \subsection{Skupinové učenie (angl. "ensemble learning")}
 
@@ -272,7 +274,7 @@ klasifikátor/regresor kombinujúci výsledky viacerých modelov. Výsledky mode
 
 \section{Experimenty}
 
-\subsection{Predikcia pozície hráča (klasifikácia)}
+\subsection{\label{classification} Predikcia pozície hráča (klasifikácia)}
 
 Úlohu sme sa v prvej etape rozhodli riešiť pomocou viacerých jednoduchých modelov. Klasifikácia hráča do 4 pozícií už pri základných nastaveniach modelov vykazovala vysokú úspešnosť \ref{tab:f1_position_4}. Model sa najviac mýlil pri klasifikácii do triedy \textit{middle}. Je to pochopiteľné, keďže stredopoliari sú "medzi" útočníkmi a obrancami \ref{fig:confusion_matrix_position_4}. 
 
@@ -306,7 +308,7 @@ Pri klasifikácii do 13 tried pozície je úspešnosť jednoduchých modelov vý
     \label{fig:confusion_matrix_position_4}%
 \end{figure}
 
-\subsection{Predikcia trhovej hodnoty hráča (regresia)}
+\subsection{\label{regression} Predikcia trhovej hodnoty hráča (regresia)}
 
 Na riešenie tejto úlohy sme využili lineárnu regresiu. V tejto úlohe sa nám zatiaľ nepodarilo dosiahnuť výraznejšie výsledky (Obr. č.\ref{fig:value_pred_true_scatterplot}).
 
@@ -346,13 +348,63 @@ Výberom atribútov sa nám podarilo natrénovať jednoduchšie modely s podobno
     \label{fig:feature_selection_classification_position}%
 \end{figure}
 
+\subsection{Ensemble}
+
+Vyskúšali sme niektoré ensemble metódy pomocou ktorých sa nám podarilo dosiahnuť ešte lepšie výsledky ako sme dosiahli doteraz. Vyskúšali sme AdaBoost, Gradient Tree Boosting (ďalej GDT), Voting (hard a soft) kde sme použili logiskickú regresiu, rozhodovací strom a SVM, ďalej sme vyskúšali metódu stacked generalization kde sme použili náhodný les, AdaBoost a GDT. S metódamy sme viac do hĺbky neexperimentovali, pri prvotých experimentoch bol najlepší GDT s tým, že jeho trénovanie travalo pomerne krátko čo nám umožnilo ho použiť aj v hyper-parameter tunningu.
+
+Pri regresnej úlohe s pomedzi použitých metód bol výrazne najlepší Gradient Tree Boosting s pomerne krátkym časom trénovania.
+
 \subsection{Hyper-parameter tunning}
 
-TODO:
+Pri oboch úlohách sme robili hyper-parameter tunning pomocou algoritmu Grid Search na metóde Gradient Tree Boosting. V oboch prípadoch sme optimalizovali nasledovné hyper-parametre - \textit{min samples leaf}, \textit{number of estimators}, \textit{max depth}, \textit{min samples split} a \textit{subsample} (tieto parametre sú bližšie vysvetlené \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{tu}). Dosiahnuté výsledky sme vizualizovali pomocou tepelných máp. Keďže je grid search najmenej optimálna metóda hľadania hyper-parametrov, prehladávali sme pomerne malý priestor parametrov, taktiež sme sa pokúšali hľadať najoptimál-nejšie dvojice parametrov, alebo sme optimalizovali iba jeden parameter, aj preto výsledky nie sú výrazne lepšie.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[height=4.5cm]{images/hyper_parameter_tunning}
+    \caption{Tepelná mapa skóre natrénovaného modelu (regresia) podľa zvolených parametrov. Na osi $x$ je parameter \textit{min samples split} na osi $y$ kombinácia je parameter \textit{max depth}. Farba vyjadruje skóre modelu (neg. RMSE), čím je farba bledšia, tým je chyba modelu nižšia.}
+    \label{fig:hyper_parameter_tunning}
+\end{figure}
+ 
+Pri optimalizácií hyper parametrov sme použíli krížovú validáciu s $k=5$ (tj. dátová sada bola rozdelená na 5 častía).
+
+Takto sa nám pre obe úlohy podarilo zlepšiť natrénované modely, avšak niektoré len minimálne (Tab. \ref{tab:hyper_parameter_tunning}).
+
+\begin{center}
+    \begin{table}[]
+        \begin{tabular}{|l|l|l|l|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{Úloha} & \multicolumn{1}{c|}{Predikovaný atribút} & \multicolumn{1}{c|}{Model} & \multicolumn{1}{c|}{Metrika} & \multicolumn{1}{c|}{Pred} & \multicolumn{1}{c|}{Po} \\ \hline
+        Klasifikácia                & Position (4)                             & GBT                        & F1 micro/macro               & 0.893/0.904                   & 0.896/0.906                                  \\ \hline
+        Klasifikácia                & Position (13)                            & GBT                        & F1 micro/macro               & 0.698/0.526                   & 0.696/0.535                                  \\ \hline
+        Regresia                    & Value                                    & GBT                        & RMSE                         & 0.529 M                       & 0.506 M                                      \\ \hline
+        \end{tabular}
+        \\
+        \caption{\label{tab:hyper_parameter_tunning} Porovnanie úspešnosti modelov pred a po optimalizácií hyper-parametrov.}
+    \end{table}
+\end{center}
+
+S vybranými najoptimálnejšími parametrami sme následne experimentovali s oversamplingom ktorý model vždy zhoršil. Taktiež sme sa pokúsili natrénovať čo najjednoduchší model - tj. použiť čo najmenej atribútov, taký model je potom ľahšie interpretovateľný.
+V prípade klasifikácie do `Position 4` sa použítím iba 13 atribútov skóre zhoršilo iba minimálne z \textit{0.896/0.906} (f1 micro/macro) na \textit{0.873/0.887}. V prípade klasifikácie do `Position 13` bol tento trend podobný. V prípade regresie sa nám dokonca podarilo natrénovať lepší model s \textit{RMSE=0,474} (Obr. \ref{fig:gbt_regression}) z pôvodných \textit{0.506} s použítím 33 zo 71 atribútov. S použitím iba dvoch atribútov - veku hráča a jeho celkového hodnotenia (stĺpec `Overall`) sme dosiahli \textit{RMSE=1}, teda iba z týchto dvoch atribútov sme vedeli predpovedať trhovú hodnotu hráča s chybou 1 milión.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[height=5cm]{images/gbt_regression}
+    \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov (v miliónoch) naším najlepším modelom. (\textit{RMSE = 0,474}).}
+    \label{fig:gbt_regression}
+\end{figure}
+
 
 \section{Zhodnotenie}
 
-TODO:
+Oproti naším prvotným baseline modelom v sekciách \ref{classification}  a \ref{regression} sa nám podarilo zlepšiť v oboch úlohách. V klasifikácií do trinástich pozícií sa nám nepodarilo dosiahnuť tak dobré výsledky pri klasifikácii do štiroch. Celkovo sa nám podarilo:
+\begin{itemize}
+    \item natrénovať model na predikciu hodnoty hráča s \textit{RMSE = 0,474} (v miliónoch)
+    \item natrénovať model na predikciu hodnoty hráča iba z dvoch atribútov s \textit{RMSE = 1} (v miliónoch)
+    \item natrénovať model na klasifikáciu do 4 základných herných pozícií s úspešnosťami \textit{0.896/0.906} (f1 micro/macro)
+    \item so 100\% úspešnosťou klasifikovať brankárov
+    \item natrénovať modely iba zo schopností hráča a jeho charakteristík
+    \item natrénovať modely s menej atribútami a s porovnateľnou úspešnosťou oproti použitiu všetkých atribútov
+\end{itemize}
 
 \newpage
 

@@ -39,6 +39,8 @@ def custom_classification_report(clf, labels, x_test, y_test, **kwargs):
         fig, ax = plt.subplots(figsize=kwargs.get('figsize', (40, 30)))
             
         plot_confusion_matrix(clf, x_test, y_test, display_labels=labels, ax=ax, xticks_rotation='vertical')
+
+        matplotlib.rcParams.update({'font.size': 12})
         
         
 def custom_classification_report_nn(clf, labels, x_test, y_test, **kwargs):
