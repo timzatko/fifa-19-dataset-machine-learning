@@ -247,7 +247,7 @@ Nás zaujíma predovšetkým varianta \textbf{micro}, keďže máme nevyvážen�
 \subsection{Predikcia pozície hráča (klasifikácia)}
 
 \paragraph{Rozhodovací strom} --
-klasifikátor založený na stromovej štruktúre. Uzly reprezentujú test vykonaný nad atribútom intancie a vetvy reprezentujú možné výsledky testu. Rozhodovací strom pri klasifikácii začína v koreni a postupne prechádza cez jednotlivé ulzy až k listu, ktorý reprezentuje výsledok klasifikácie (triedu). 
+klasifikátor založený na stromovej štruktúre. Uzly reprezentujú test vykonaný nad atribútom inštancie a vetvy reprezentujú možné výsledky testu. Rozhodovací strom pri klasifikácii začína v koreni a postupne prechádza cez jednotlivé ulzy až k listu, ktorý reprezentuje výsledok klasifikácie (triedu). 
 
 \subsection{Predikcia trhovej hodnoty hráča (regresia)}
 
@@ -329,43 +329,43 @@ Použitím oversampling-u sme dosiahli iba mierne zlepšenie v klasifiácii.
 
 \subsection{Výber atribútov (angl. feature selection)}
 
-Jednotlivé atribúty sme zatiaľ vyberali iba na základe doménových znalostí a podľa nami definovanej úlohy objavovania znalostí (Sekcia \ref{task_definition}). Keďže je týchto atribútov stále veľa pokúsili sme sa ich zredukovať, aby sme mali jednoduchší a ľahšie interpretovateľný model. Vyskúšali sme niekoľko spôsobov, a to konkrétne: odstránenie atribútov z nízkou varianciou, výber atribútov na základe jednoroz-merných štatistických testov (angl. univariate feature selection), rekurzívnu eli-mináciu atribútov, výber na základe ich dôležisosti pre model (feature importances). Týmto jednotlivým metódam sme skúšali rôzne parametre a výber atribútov sme vykonávali pre klasifikačnú úlohu (klasifikátor - náhodný les) a aj pre regresnú úlohu (lineárna regresia).
+Jednotlivé atribúty sme zatiaľ vyberali iba na základe doménových znalostí a podľa nami definovanej úlohy objavovania znalostí (Sekcia \ref{task_definition}). Keďže je týchto atribútov stále veľa, pokúsili sme sa ich zredukovať aby sme mali jednoduchší a ľahšie interpretovateľný model. Vyskúšali sme niekoľko spôsobov, a to konkrétne: odstránenie atribútov s nízkou varianciou, výber atribútov na základe jednorozmerných štatistických testov (angl. "univariate feature selection"), rekurzívnu elimináciu atribútov, výber na základe ich dôležitosti pre model (angl. "feature importances"). V rámci týchto metód sme skúšali rôzne parametre a výber atribútov sme vykonávali pre klasifikačnú úlohu (klasifikátor - náhodný les) a aj pre regresnú úlohu (lineárna regresia).
 
-Výber atribútov výrazne nezlepšil úspešnosť modelu, ale ani nezhoršil, použitím polovice zo všetkých atribútov sme dosiahli tak dobré výsledky ako keby sme ich použili všetky (Obr. \ref{fig:feature_selection_classification_position}). Pri regresii bol tento trend podobný.
+Výber atribútov výrazne nezlepšil úspešnosť modelu, ale ani nezhoršil. Použitím polovice zo všetkých atribútov sme dosiahli rovnako dobré výsledky ako keby sme ich použili všetky (Obr. \ref{fig:feature_selection_classification_position}). Pri regresii bol tento trend podobný.
 
 Výberom atribútov sa nám podarilo natrénovať jednoduchšie modely s podobnou úspešnosťou ako bez výberu atribútov.
 
 \begin{figure}%
     \centering
-    \subfloat[Úspešnosť pri klasifikácií `Position 4` podľa počtu použitých atribútov]{{ 
+    \subfloat[Úspešnosť pri klasifikácii `Position 4` podľa počtu použitých atribútov]{{ 
         \includegraphics[width=5.5cm]{images/feature_selection_classification_position_4}
     }}%
     \qquad
-    \subfloat[Úspešnosť pri klasifikácií `Position 13` podľa počtu použitých atribútov]{{
+    \subfloat[Úspešnosť pri klasifikácii `Position 13` podľa počtu použitých atribútov]{{
         \includegraphics[width=5.5cm]{images/feature_selection_classification_position_13}
     }}%
-    \caption{Úspešnosti pri klasifikácií podľa počtu použitých atribútov. Graf vznikol použitím rekurzívnej eliminácie s krížovou validáciou (\textit{k=2}) na klasifikátore náhodný les.}%
+    \caption{Úspešnosti pri klasifikácii podľa počtu použitých atribútov. Graf vznikol použitím rekurzívnej eliminácie s krížovou validáciou (\textit{k=2}) na klasifikátore náhodný les.}%
     \label{fig:feature_selection_classification_position}%
 \end{figure}
 
 \subsection{Ensemble}
 
-Vyskúšali sme niektoré ensemble metódy pomocou ktorých sa nám podarilo dosiahnuť ešte lepšie výsledky ako sme dosiahli doteraz. Vyskúšali sme AdaBoost, Gradient Tree Boosting (ďalej GDT), Voting (hard a soft) kde sme použili logiskickú regresiu, rozhodovací strom a SVM, ďalej sme vyskúšali metódu stacked generalization kde sme použili náhodný les, AdaBoost a GDT. S metódamy sme viac do hĺbky neexperimentovali, pri prvotých experimentoch bol najlepší GDT s tým, že jeho trénovanie travalo pomerne krátko čo nám umožnilo ho použiť aj v hyper-parameter tunningu.
+Vyskúšali sme niektoré ensemble metódy, pomocou ktorých sa nám podarilo dosiahnuť ešte lepšie výsledky ako sme dosiahli doteraz. Vyskúšali sme AdaBoost, Gradient Tree Boosting (ďalej GDT), Voting (hard a soft) kde sme použili logiskickú regresiu, rozhodovací strom a SVM. Ďalej sme vyskúšali metódu stacked generalization, kde sme použili náhodný les, AdaBoost a GDT. S metódami sme viac do hĺbky neexperimentovali. Pri prvotých experimentoch bol najlepší GDT s tým, že jeho trénovanie trvalo pomerne krátko, čo nám umožnilo použiť ho aj pri hyper-parameter tunningu.
 
-Pri regresnej úlohe s pomedzi použitých metód bol výrazne najlepší Gradient Tree Boosting s pomerne krátkym časom trénovania.
+Pri regresnej úlohe spomedzi použitých metód bol výrazne najlepší Gradient Tree Boosting s pomerne krátkym časom trénovania.
 
 \subsection{Hyper-parameter tunning}
 
-Pri oboch úlohách sme robili hyper-parameter tunning pomocou algoritmu Grid Search na metóde Gradient Tree Boosting. V oboch prípadoch sme optimalizovali nasledovné hyper-parametre - \textit{min samples leaf}, \textit{number of estimators}, \textit{max depth}, \textit{min samples split} a \textit{subsample} (tieto parametre sú bližšie vysvetlené \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{tu}). Dosiahnuté výsledky sme vizualizovali pomocou tepelných máp. Keďže je grid search najmenej optimálna metóda hľadania hyper-parametrov, prehladávali sme pomerne malý priestor parametrov, taktiež sme sa pokúšali hľadať najoptimál-nejšie dvojice parametrov, alebo sme optimalizovali iba jeden parameter, aj preto výsledky nie sú výrazne lepšie.
+Pri oboch úlohách sme realizovali hyper-parameter tunning pomocou algoritmu Grid Search na metóde Gradient Tree Boosting. V oboch prípadoch sme optimalizovali nasledujúce hyper-parametre - \textit{min samples leaf}, \textit{number of estimators}, \textit{max depth}, \textit{min samples split} a \textit{subsample} (tieto parametre sú bližšie vysvetlené \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html}{tu}). Dosiahnuté výsledky sme vizualizovali pomocou tepelných máp. Keďže je grid search najmenej optimálna metóda hľadania hyper-parametrov, prehľadávali sme pomerne malý priestor parametrov. Taktiež sme sa pokúšali hľadať najoptimálnejšie dvojice parametrov alebo sme optimalizovali iba jeden parameter. Aj preto výsledky nie sú výrazne lepšie.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[height=4.5cm]{images/hyper_parameter_tunning}
-    \caption{Tepelná mapa skóre natrénovaného modelu (regresia) podľa zvolených parametrov. Na osi $x$ je parameter \textit{min samples split} na osi $y$ kombinácia je parameter \textit{max depth}. Farba vyjadruje skóre modelu (neg. RMSE), čím je farba bledšia, tým je chyba modelu nižšia.}
+    \caption{Tepelná mapa skóre natrénovaného modelu (regresia) podľa zvolených parametrov. Na osi $x$ je parameter \textit{min samples split} na osi $y$ je parameter \textit{max depth}. Farba vyjadruje skóre modelu (neg. RMSE). Čím je farba bledšia, tým je chyba modelu nižšia.}
     \label{fig:hyper_parameter_tunning}
 \end{figure}
  
-Pri optimalizácií hyper parametrov sme použíli krížovú validáciu s $k=5$ (tj. dátová sada bola rozdelená na 5 častía).
+Pri optimalizácii hyper-parametrov sme použili krížovú validáciu s $k=5$ (tj. dátová sada bola rozdelená na 5 častí).
 
 Takto sa nám pre obe úlohy podarilo zlepšiť natrénované modely, avšak niektoré len minimálne (Tab. \ref{tab:hyper_parameter_tunning}).
 
@@ -379,24 +379,24 @@ Takto sa nám pre obe úlohy podarilo zlepšiť natrénované modely, avšak nie
         Regresia                    & Value                                    & GBT                        & RMSE                         & 0.529 M                       & 0.506 M                                      \\ \hline
         \end{tabular}
         \\
-        \caption{\label{tab:hyper_parameter_tunning} Porovnanie úspešnosti modelov pred a po optimalizácií hyper-parametrov.}
+        \caption{\label{tab:hyper_parameter_tunning} Porovnanie úspešnosti modelov pred a po optimalizácii hyper-parametrov.}
     \end{table}
 \end{center}
 
-S vybranými najoptimálnejšími parametrami sme následne experimentovali s oversamplingom ktorý model vždy zhoršil. Taktiež sme sa pokúsili natrénovať čo najjednoduchší model - tj. použiť čo najmenej atribútov, taký model je potom ľahšie interpretovateľný.
+S vybranými najoptimálnejšími parametrami sme následne experimentovali s oversamplingom, ktorý model vždy zhoršil. Taktiež sme sa pokúsili natrénovať čo najjednoduchší model - tj. použiť čo najmenej atribútov, taký model je potom ľahšie interpretovateľný.
 V prípade klasifikácie do `Position 4` sa použítím iba 13 atribútov skóre zhoršilo iba minimálne z \textit{0.896/0.906} (f1 micro/macro) na \textit{0.873/0.887}. V prípade klasifikácie do `Position 13` bol tento trend podobný. V prípade regresie sa nám dokonca podarilo natrénovať lepší model s \textit{RMSE=0,474} (Obr. \ref{fig:gbt_regression}) z pôvodných \textit{0.506} s použítím 33 zo 71 atribútov. S použitím iba dvoch atribútov - veku hráča a jeho celkového hodnotenia (stĺpec `Overall`) sme dosiahli \textit{RMSE=1}, teda iba z týchto dvoch atribútov sme vedeli predpovedať trhovú hodnotu hráča s chybou 1 milión.
 
 \begin{figure}[htp]
     \centering
     \includegraphics[height=5cm]{images/gbt_regression}
-    \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov (v miliónoch) naším najlepším modelom. (\textit{RMSE = 0,474}).}
+    \caption{Predikované hodnoty hráčov a reálne hodnoty hráčov (v miliónoch) našim najlepším modelom. (\textit{RMSE = 0,474}).}
     \label{fig:gbt_regression}
 \end{figure}
 
 
 \section{Zhodnotenie}
 
-Oproti naším prvotným baseline modelom v sekciách \ref{classification}  a \ref{regression} sa nám podarilo zlepšiť v oboch úlohách. V klasifikácií do trinástich pozícií sa nám nepodarilo dosiahnuť tak dobré výsledky pri klasifikácii do štiroch. Celkovo sa nám podarilo:
+Oproti našim prvotným baseline modelom v sekciách \ref{classification}  a \ref{regression} sa nám podarilo zlepšiť v oboch úlohách. V klasifikácií do trinástich pozícií sa nám nepodarilo dosiahnuť tak dobré výsledky ako pri klasifikácii do štyroch. Celkovo sa nám podarilo:
 \begin{itemize}
     \item natrénovať model na predikciu hodnoty hráča s \textit{RMSE = 0,474} (v miliónoch)
     \item natrénovať model na predikciu hodnoty hráča iba z dvoch atribútov s \textit{RMSE = 1} (v miliónoch)
