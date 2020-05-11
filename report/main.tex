@@ -379,12 +379,12 @@ Takto sa nám pre obe úlohy podarilo zlepšiť natrénované modely, avšak nie
         Regresia                    & Value                                    & GBT                        & RMSE                         & 0.529 M                       & 0.506 M                                      \\ \hline
         \end{tabular}
         \\
-        \caption{\label{tab:hyper_parameter_tunning} Porovnanie úspešnosti modelov pred a po optimalizácii hyper-parametrov.}
+        \caption{\label{tab:hyper_parameter_tunning} Porovnanie úspešnosti modelov pred a po optimalizácii hyper-parametrov s použitím \textbf{všetkých} atribútov.}
     \end{table}
 \end{center}
 
 S vybranými najoptimálnejšími parametrami sme následne experimentovali s oversamplingom, ktorý model vždy zhoršil. Taktiež sme sa pokúsili natrénovať čo najjednoduchší model - tj. použiť čo najmenej atribútov, taký model je potom ľahšie interpretovateľný.
-V prípade klasifikácie do `Position 4` sa použítím iba 13 atribútov skóre zhoršilo iba minimálne z \textit{0.896/0.906} (f1 micro/macro) na \textit{0.873/0.887}. V prípade klasifikácie do `Position 13` bol tento trend podobný. V prípade regresie sa nám dokonca podarilo natrénovať lepší model s \textit{RMSE=0,474} (Obr. \ref{fig:gbt_regression}) (predtým \textit{RMSE=0.506}) s použítím 33 zo 71 atribútov. S použitím iba dvoch atribútov - veku hráča a jeho celkového hodnotenia (stĺpec `Overall`) sme dosiahli \textit{RMSE=1}, teda iba z týchto dvoch atribútov sme vedeli predpovedať trhovú hodnotu hráča s chybou 1 milión.
+V prípade klasifikácie do `Position 4` sa použítím iba 13 atribútov skóre zhoršilo iba minimálne z \textit{0.896/0.906} (f1 micro/macro) na \textit{0.873/0.887}. V prípade klasifikácie do `Position 13` bol tento trend podobný. V prípade regresie sa nám dokonca podarilo natrénovať lepší model s \textit{RMSE=0,474} (Obr. \ref{fig:gbt_regression}) (predtým \textit{RMSE=0.506}) s použítím 33 namiesto všetkých (71) atribútov. S použitím iba dvoch atribútov - veku hráča a jeho celkového hodnotenia (stĺpec `Overall`) sme dosiahli \textit{RMSE=1}, teda iba z týchto dvoch atribútov sme vedeli predpovedať trhovú hodnotu hráča s chybou 1 milión.
 
 \begin{figure}[htp]
     \centering
