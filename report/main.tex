@@ -410,15 +410,16 @@ Oproti našim prvotným baseline modelom v sekciách \ref{classification}  a \re
     \item natrénovať jednoduchšie modely s menej atribútami a s porovnateľnou úspešnosťou oproti použitiu všetkých atribútov
 \end{itemize}
 
-S príbuznými prácami sa \textbf{nemáme ako porovnávať}, síce sa zaoberajú pozíciou hráča, ale tak, že hľadajú ktoré atribúty sú vyznamné pre danú pozíciu hráča. Taktiež používajú inú dátovú sadu (zo staršej verzie hry. Práce, ktoré sa zaoberajú klasifikáciou pozície hráča zas používajú rozdielnu dátovú sadu s rozdielnymi atribútmi.
+S príbuznými prácami sa \textbf{nemáme ako porovnávať}, síce sa zaoberajú pozíciou hráča, ale tak, že hľadajú ktoré atribúty sú vyznamné pre danú pozíciu hráča. Taktiež používajú inú dátovú sadu (zo staršej verzie hry). Práce, ktoré sa zaoberajú klasifikáciou pozície hráča zas používajú rozdielnu dátovú sadu s rozdielnymi atribútmi.
 
 \section{Future Work}
 
 Identifikovali sme nasledovné možné vylepšenia tejto práce:
 
 \begin{itemize}
-    \item hyper-parameter tunning pomocou prírodou inšpirovaných algoritmov namiesto grid search
+    \item hyper-parameter tunning pomocou prírodou inšpirovaných algoritmov, bayesovskej optimalizácie (angl. Bayesian optimization) alebo náhodného hľadania (angl. random search) namiesto grid search
     \item feature enginnering - napr. polynomial features
+    \item interpretovanie výsledkov s cieľom zistiť kde (na akých hráčoch s akými atribútmi) sa model mýli
 \end{itemize}
 
 \newpage
