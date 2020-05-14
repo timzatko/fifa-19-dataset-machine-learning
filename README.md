@@ -2,7 +2,7 @@
 
 Authors: [Timotej Zaťko](https://github.com/timzatko), [Tomáš Hoffer](https://github.com/tomhoffer)
 
-In this work we aimed to predict aimed a football player's value and their game position on the FIFA 19 dataset which is publicly available on [kaggle](https://www.kaggle.com/karangadiya/fifa19). We did complete data analysis of player's data which was followed by data preprocessing and then by training the model. We tried to use only player's skill based attributes (finishing, sprint speed, heading...) and physical attributes (age, height, weight...) in our models.
+In this work we aimed to predict a football player's value and their game position on the FIFA 19 dataset which is publicly available on [kaggle](https://www.kaggle.com/karangadiya/fifa19). We did complete data analysis of player's data which was followed by data preprocessing and then by training the model. We tried to use only the player's skill-based attributes (finishing, sprint speed, heading...) and physical attributes (age, height, weight...) in our models.
 
 ## Setup
 
