@@ -1,4 +1,4 @@
-# FIFA 19 Dataset Analysis + Prediction And Classification Tasks
+# FIFA 19 - player's value and game position prediction
 
 Authors: [Timotej Zaťko](https://github.com/timzatko), [Tomáš Hoffer](https://github.com/tomhoffer)
 
