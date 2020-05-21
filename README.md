@@ -1,4 +1,4 @@
-# FIFA 19 - player's value and game position prediction
+# FIFA 19 dataset - player's market value and game position prediction
 
 Authors: [Timotej Zaťko](https://github.com/timzatko), [Tomáš Hoffer](https://github.com/tomhoffer)
 
